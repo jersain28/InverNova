@@ -7,8 +7,13 @@ environment:
   sdk: '>=3.2.6 <4.0.0'
 
 dependencies:
+  firebase_core: ^2.25.5
+  firebase_auth: ^4.2.0
   flutter:
     sdk: flutter
+  google_nav_bar: ^5.0.6
+  cloud_firestore: ^4.7.1
+  google_sign_in: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -17,3 +22,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - lib/images/
