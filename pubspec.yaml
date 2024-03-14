@@ -7,20 +7,23 @@ environment:
   sdk: '>=3.2.6 <4.0.0'
 
 dependencies:
-  firebase_core: ^2.25.5
-  firebase_auth: ^4.2.0
   flutter:
     sdk: flutter
-  google_nav_bar: ^5.0.6
-  cloud_firestore: ^4.7.1
+  firebase_core: ^2.27.0
+  firebase_auth: ^4.17.8
   google_sign_in: ^6.2.1
+  cloud_firestore: ^4.15.8
+  the_apple_sign_in: ^1.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
 
 flutter:
   uses-material-design: true
-  assets:
-    - lib/images/
+
+assets:
+  - images/google.png
+  - images/apple.png
+  - images/InverNovaLogo.jpg
