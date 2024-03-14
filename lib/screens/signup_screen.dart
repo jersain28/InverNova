@@ -87,6 +87,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     'email': email.text,
                     'fullName': fullName.text,
                     'nickName': nickName.text,
+                    'password': password.text
                     // Puedes agregar más campos si es necesario
                   });
 
