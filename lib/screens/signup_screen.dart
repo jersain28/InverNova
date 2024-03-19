@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:invernova/screens/home_screen.dart';
+// import 'package:invernova/screens/home_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -93,12 +93,12 @@ class _SignupScreenState extends State<SignupScreen> {
 
                   // Navegar a la pantalla HomeScreen
                   // ignore: use_build_context_synchronously
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const HomeScreen(),
-                    ),
-                  );
+                  // Navigator.pushReplacement(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (_) => const Home(),
+                  //   ),
+                  // );
                 },
                 child: const Text('Registrarte'),
               ),
