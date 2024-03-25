@@ -14,7 +14,6 @@ dependencies:
   google_sign_in: ^6.2.1
   cloud_firestore: ^4.15.8
   the_apple_sign_in: ^1.1.1
-  audioplayers: ^5.2.1
   flutter_local_notifications: ^17.0.0
 
 dev_dependencies:
@@ -25,6 +24,4 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/google.png
-    - assets/images/apple.png
     - assets/images/InverNovaLogo.jpg

@@ -12,7 +12,12 @@
           "package_name": "com.example.invernova"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "379116688959-f0iei22g1ff9sod7ajr83pkoid1nmtv8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyA4X0fPlyrid-Hy31ri3rdzkZRG2TvbU-0"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "379116688959-6fqp9afgj4ko11tk42t30e7v2mrmc4a9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "379116688959-a4raci6nq129sp5pfgk1vepuhsb9omji.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.invernova.RunnerTests"
+              }
+            }
+          ]
         }
       }
     }

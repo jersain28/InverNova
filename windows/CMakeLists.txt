@@ -1,5 +1,5 @@
 # Project-level configuration.
-cmake_minimum_required(VERSION 3.27)
+cmake_minimum_required(VERSION 3.10)
 project(invernova LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change

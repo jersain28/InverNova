@@ -34,9 +34,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           content: Text(
             "No user found for that email.",
             style: TextStyle(fontSize: 20.0),
-            ),
           ),
-        );
+        ));
       }
     }
   }
@@ -45,17 +44,19 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      body: Column(
+      body: ListView(
         children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Image.asset(
-              "images/InverNovaLogo.jpg",
-              fit: BoxFit.cover,
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: const Image(image: AssetImage('assets/images/InverNovaLogo.jpg'),
+                //fit: BoxFit.cover,
+              ),
             ),
           ),
           const SizedBox(
-            height: 40.0,
+            height: 10.0,
           ),
           Container(
             alignment: Alignment.topCenter,
@@ -70,12 +71,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             const SizedBox(
               height: 10.0,
             ),
-            const Text(
-              "Enter your mail",
-              style: TextStyle(
-                color: Color(0xFF8c8e98),
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold),
+            Container(
+              alignment: Alignment.center,
+              child: const Text(
+                "Enter your mail",
+                style: TextStyle(
+                  color: Color(0xFF8c8e98),
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold),
+                ),
               ),
               Expanded(
                 child: Form(
@@ -83,11 +87,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 10.0),
                     child: ListView(
+                      shrinkWrap: true,
                       children: [
                         Container(
                           padding: const EdgeInsets.only(left: 10.0),
                           decoration: BoxDecoration(
-                            border: Border.all(color: const Color(0xFF8c8e98),width: 2.0),
+                            color: const Color(0xFFedf0f8),
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: TextFormField(
@@ -103,9 +108,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               hintText: "Email",
                               hintStyle: TextStyle(
                                 fontSize: 18.0,
-                                color: Color(0xFF8c8e98),),
+                                color: Color(0xFF8c8e98),
+                              ),
                               prefixIcon: Icon(
-                                Icons.person,
+                                Icons.mail,
                                 color: Color(0xFF8c8e98),
                                 size: 30.0,
                               ),
@@ -120,70 +126,69 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               if(_formkey.currentState!.validate()){
                                 setState(() {
                                   email=mailcontroller.text;
-                                }
-                              );
-                              resetPassword();
-                            }
-                          },
-                          child: Container(
-                            width: 140,
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF273671),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                "Send Email",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.bold,
+                                });
+                                resetPassword();
+                              }
+                            },
+                            child: Container(
+                              width: 140,
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF273671),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  "Send Email",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 30.0,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              "Don't have an account?",
-                              style: TextStyle(
-                                fontSize: 18.0, color: Color(0xFF8c8e98),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 5.0,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const SignUp(),
-                                  ),
-                                );
-                              },
-                              child: const Text(
-                                "Create",
+                          const SizedBox(
+                            height: 30.0,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                "Don't have an account?",
                                 style: TextStyle(
-                                  color: Color(0xFF273671),
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18.0, color: Color(0xFF8c8e98),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                              const SizedBox(
+                                width: 5.0,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const SignUp(),
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  "Create",
+                                  style: TextStyle(
+                                    color: Color(0xFF273671),
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
         ],
       ),
     );

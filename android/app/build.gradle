@@ -24,7 +24,6 @@ if (flutterVersionName == null) {
 }
 
 
-
 android {
     namespace "com.example.invernova"
     compileSdkVersion flutter.compileSdkVersion
