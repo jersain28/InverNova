@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:invernova/screens/home_screem.dart';
 import 'package:invernova/screens/login.dart';
 
 class Profile extends StatefulWidget {
@@ -12,15 +13,40 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+    int indexNavigation = 0;
+
+  openScreen(int index, BuildContext context){
+    MaterialPageRoute ruta = MaterialPageRoute(builder: (context) => const HomeScreen());
+
+ switch (index) {
+    case 0:
+      ruta = MaterialPageRoute(builder: (context) => const HomeScreen());
+      break;
+    case 1:
+      ruta = MaterialPageRoute(builder: (context) => const Profile());
+      break;
+  }
+
+  if (index != indexNavigation) {
+    setState(() {
+      indexNavigation = index;
+    });
+  }
+
+  Navigator.push(context, ruta);
+}
 
   Future<void> _signOut() async {
-    await _auth.signOut();
-    Navigator.pushReplacement(
-      // ignore: use_build_context_synchronously
-      context,
-      MaterialPageRoute(builder: (context) => const LogIn()),
-    );
-  }
+  // Redirigir primero a la pantalla de inicio de sesión
+  Navigator.pushReplacement(
+    // ignore: use_build_context_synchronously
+    context,
+    MaterialPageRoute(builder: (context) => const LogIn()),
+  );
+
+  // Realizar la operación de cierre de sesión
+  await _auth.signOut();
+}
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +74,22 @@ class _ProfileState extends State<Profile> {
           ],
         ),
       ),
+        bottomNavigationBar: BottomNavigationBar(
+        currentIndex: indexNavigation,
+        backgroundColor: const Color.fromARGB(204, 255, 255, 255),
+        selectedItemColor: const Color.fromARGB(197, 46, 200, 105),
+        onTap: (index) => openScreen(index, context),
+        items:const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Perfil'
+            ),
+        ],
+      )
     );
   }
 }
