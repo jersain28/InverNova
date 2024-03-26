@@ -15,12 +15,12 @@ class _AlarmsState extends State<Alarms> {
         title: const Text('Alarms'),
       ),
       body: const Center(
-        child: Text('No hay alertas'),
-      ),
-      floatingActionButton: const FloatingActionButton(
-        tooltip: 'Agregar alerta',
-        onPressed: null,
-        child: Icon(Icons.add),
+        //child: ElevatedButton(
+          //onPressed: () {
+
+          //},
+          child: Text('Show notification'),
+        //),
       ),
     );
   }

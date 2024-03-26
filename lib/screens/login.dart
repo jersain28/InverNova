@@ -1,11 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-//import 'package:invernova/screens/alarms.dart';
 import 'package:invernova/screens/forgot_password.dart';
-import 'package:invernova/screens/profile.dart';
-//import 'package:invernova/screens/home.dart';
+import 'package:invernova/screens/home_screem.dart';
 import 'package:invernova/screens/signup.dart';
-//import 'package:invernova/screens/service/auth.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({super.key});
@@ -31,7 +28,7 @@ userLogin()async{
       // ignore: use_build_context_synchronously
       context,
       MaterialPageRoute(
-        builder: (context) => const Profile(),
+        builder: (context) => const HomeScreen(),
       ),
     );
   }on FirebaseAuthException catch(e){
@@ -61,17 +58,16 @@ userLogin()async{
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
+      body: ListView(
         children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Image.asset(
-              "images/InverNovaLogo.jpg",
-              fit: BoxFit.cover,
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: const Image(image: AssetImage('assets/images/InverNovaLogo.jpg'),
+                //fit: BoxFit.cover,
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 30.0,
           ),
           Padding(
             padding: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -100,6 +96,11 @@ userLogin()async{
                           color: Color(0xFFb2b7bf),
                           fontSize: 18.0,
                         ),
+                        prefixIcon: Icon(
+                          Icons.mail,
+                          color: Color(0xFF8c8e98),
+                          size: 30.0,
+                        ),
                       ),
                     ),
                   ),
@@ -127,6 +128,11 @@ userLogin()async{
                           color: Color(0xFFb2b7bf),
                           fontSize: 18.0,
                         ),
+                        prefixIcon: Icon(
+                          Icons.lock,
+                          color: Color(0xFF8c8e98),
+                          size: 30.0,
+                        ),
                       ),
                       obscureText: true,
                     ),
@@ -151,7 +157,7 @@ userLogin()async{
                         horizontal: 30.0,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF273671),
+                        color: const Color.fromARGB(255, 28, 129, 47),
                         borderRadius: BorderRadius.circular(30),
                         ),
                         child: const Center(
@@ -172,7 +178,9 @@ userLogin()async{
               const SizedBox(
                 height: 20.0,
               ),
-              GestureDetector(
+              Container(
+                alignment: Alignment.center,
+                child: GestureDetector(
                 onTap: (){
                   Navigator.push(
                     context,
@@ -190,6 +198,8 @@ userLogin()async{
                     ),
                   ),
                 ),
+              ),
+              
                 /*const SizedBox(
                   height: 40.0,
                 ),
@@ -260,7 +270,7 @@ userLogin()async{
                   child: const Text(
                     "SignUp",
                     style: TextStyle(
-                      color: Color(0xFF273671),
+                      color: Color.fromARGB(255, 28, 129, 47),
                       fontSize: 20.0,
                       fontWeight: FontWeight.w500),
                   ),

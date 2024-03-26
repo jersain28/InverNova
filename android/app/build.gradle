@@ -24,11 +24,11 @@ if (flutterVersionName == null) {
 }
 
 
-
 android {
     namespace "com.example.invernova"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
+    compileSdkVersion 34
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

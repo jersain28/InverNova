@@ -27,7 +27,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.macOS:
         return macos;
       case TargetPlatform.windows:
-        return windows;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -63,6 +66,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '379116688959',
     projectId: 'invernova-69060',
     storageBucket: 'invernova-69060.appspot.com',
+    iosClientId: '379116688959-ek1qa546nm48nf7mphjng006d3hjbd1m.apps.googleusercontent.com',
     iosBundleId: 'com.example.invernova',
   );
 
@@ -72,14 +76,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '379116688959',
     projectId: 'invernova-69060',
     storageBucket: 'invernova-69060.appspot.com',
+    iosClientId: '379116688959-a4raci6nq129sp5pfgk1vepuhsb9omji.apps.googleusercontent.com',
     iosBundleId: 'com.example.invernova.RunnerTests',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyA4X0fPlyrid-Hy31ri3rdzkZRG2TvbU-0',
-    appId: '1:379116688959:windows:be7c956141b259a6694a8a',
-    messagingSenderId: '379116688959',
-    projectId: 'invernova-69060',
-    storageBucket: 'invernova-69060.appspot.com',
   );
 }
