@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:invernova/screens/home.dart';
+import 'package:invernova/screens/home_screem.dart';
 import 'package:invernova/screens/services/database.dart';
 import 'package:the_apple_sign_in/the_apple_sign_in.dart';
 
@@ -43,7 +43,7 @@ class AuthMethods {
           .addUser(userDetails.uid, userInfoMap)
           .then((value) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const Home()));
+            context, MaterialPageRoute(builder: (context) => const HomeScreen()));
       });
     }
   }
