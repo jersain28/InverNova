@@ -98,10 +98,13 @@ class _SignUpState extends State<SignUp> {
                       },
                       controller: namecontroller,
                       decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "Name",
-                          hintStyle: TextStyle(
-                              color: Color(0xFFb2b7bf), fontSize: 18.0)),
+                        border: InputBorder.none,
+                        hintText: "Name",
+                        hintStyle: TextStyle(
+                          color: Color(0xFFb2b7bf),
+                          fontSize: 18.0,
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -146,12 +149,14 @@ class _SignUpState extends State<SignUp> {
                       },
                       controller: passwordcontroller,
                       decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          
-                          hintText: "Password",
-                          hintStyle: TextStyle(
-                              color: Color(0xFFb2b7bf), fontSize: 18.0)),
-           obscureText: true,  ),
+                        border: InputBorder.none,
+                        hintText: "Password",
+                        hintStyle: TextStyle(
+                          color: Color(0xFFb2b7bf),
+                          fontSize: 18.0,
+                        ),
+                      ),
+                    obscureText: true,  ),
                   ),
                   const SizedBox(
                     height: 30.0,
@@ -168,26 +173,28 @@ class _SignUpState extends State<SignUp> {
                       registration();
                     },
                     child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 13.0, horizontal: 30.0),
+                      width: MediaQuery.of(context).size.width,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 13.0, horizontal: 30.0),
                         decoration: BoxDecoration(
-                            color: const Color(0xFF273671),
-                            borderRadius: BorderRadius.circular(30)),
+                          color: const Color(0xFF273671),
+                          borderRadius: BorderRadius.circular(30)),
                         child: const Center(
-                            child: Text(
-                          "Sign Up",
+                          child: Text(
+                            "Sign Up",
                           style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 22.0,
-                              fontWeight: FontWeight.w500),
-                        ))),
+                            color: Colors.white,
+                            fontSize: 22.0,
+                            fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
           ),
-          const SizedBox(
+          /*const SizedBox(
             height: 40.0,
           ),
           const Text(
@@ -203,12 +210,19 @@ class _SignUpState extends State<SignUp> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                "images/google.png",
-                height: 45,
-                width: 45,
-                fit: BoxFit.cover,
+              const Image(
+                image: AssetImage(
+                  'assets/images/google.png',
+                ),
               ),
+
+              // Image.asset(
+              //   "images/google.png",
+              //   height: 45,
+              //   width: 45,
+              //   fit: BoxFit.cover,
+              // ),
+              
               const SizedBox(
                 width: 30.0,
               ),
@@ -219,9 +233,9 @@ class _SignUpState extends State<SignUp> {
                 fit: BoxFit.cover,
               )
             ],
-          ),
+          ),*/
           const SizedBox(
-            height: 40.0,
+            height: 20.0,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

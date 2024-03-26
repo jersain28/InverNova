@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+//import 'package:invernova/screens/alarms.dart';
 import 'package:invernova/screens/forgot_password.dart';
-import 'package:invernova/screens/home.dart';
+import 'package:invernova/screens/profile.dart';
+//import 'package:invernova/screens/home.dart';
 import 'package:invernova/screens/signup.dart';
-import 'package:invernova/screens/service/auth.dart';
+//import 'package:invernova/screens/service/auth.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({super.key});
@@ -29,7 +31,7 @@ userLogin()async{
       // ignore: use_build_context_synchronously
       context,
       MaterialPageRoute(
-        builder: (context) => const Home(),
+        builder: (context) => const Profile(),
       ),
     );
   }on FirebaseAuthException catch(e){
@@ -145,8 +147,9 @@ userLogin()async{
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       padding: const EdgeInsets.symmetric(
-                        vertical: 13.0, horizontal: 30.0,
-                        ),
+                        vertical: 13.0,
+                        horizontal: 30.0,
+                      ),
                       decoration: BoxDecoration(
                         color: const Color(0xFF273671),
                         borderRadius: BorderRadius.circular(30),
@@ -187,7 +190,7 @@ userLogin()async{
                     ),
                   ),
                 ),
-                const SizedBox(
+                /*const SizedBox(
                   height: 40.0,
                 ),
                 const Text(
@@ -233,7 +236,7 @@ userLogin()async{
               ),
               const SizedBox(
                 height: 40.0,
-              ),
+              ),*/
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

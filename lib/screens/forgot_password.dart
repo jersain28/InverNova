@@ -19,19 +19,24 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
           content: Text(
-        "Password Reset Email has been sent !",
-        style: TextStyle(fontSize: 20.0),
-      )));
+            "Password Reset Email has been sent !",
+            style: TextStyle(fontSize: 20.0),
+          ),
+        ),
+      );
     } on FirebaseAuthException catch (e) {
       if (e.code == "user-not-found") {
         // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text(
-          "No user found for that email.",
-          style: TextStyle(fontSize: 20.0),
-        )));
+          content: Text(
+            "No user found for that email.",
+            style: TextStyle(fontSize: 20.0),
+            ),
+          ),
+        );
       }
     }
   }
@@ -39,34 +44,41 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Column(
         children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Image.asset(
+              "images/InverNovaLogo.jpg",
+              fit: BoxFit.cover,
+            ),
+          ),
           const SizedBox(
-            height: 70.0,
+            height: 40.0,
           ),
           Container(
             alignment: Alignment.topCenter,
             child: const Text(
               "Password Recovery",
               style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold),
+                color: Color.fromARGB(255, 0, 0, 0),
+                fontSize: 30.0,
+                fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 10.0,
-          ),
-          const Text(
-            "Enter your mail",
-            style: TextStyle(
-                color: Colors.white,
+            const SizedBox(
+              height: 10.0,
+            ),
+            const Text(
+              "Enter your mail",
+              style: TextStyle(
+                color: Color(0xFF8c8e98),
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold),
-          ),
-          Expanded(
-              child: Form(
+              ),
+              Expanded(
+                child: Form(
                   key: _formkey,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 10.0),
@@ -75,8 +87,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         Container(
                           padding: const EdgeInsets.only(left: 10.0),
                           decoration: BoxDecoration(
-                            border:
-                                Border.all(color: Colors.white70, width: 2.0),
+                            border: Border.all(color: const Color(0xFF8c8e98),width: 2.0),
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: TextFormField(
@@ -87,28 +98,30 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               return null;
                             },
                             controller: mailcontroller,
-                            style: const TextStyle(color: Colors.white),
+                            style: const TextStyle(color: Color(0xFF8c8e98),),
                             decoration: const InputDecoration(
-                                hintText: "Email",
-                                hintStyle: TextStyle(
-                                    fontSize: 18.0, color: Colors.white),
-                                prefixIcon: Icon(
-                                  Icons.person,
-                                  color: Colors.white70,
-                                  size: 30.0,
-                                ),
-                                border: InputBorder.none),
+                              hintText: "Email",
+                              hintStyle: TextStyle(
+                                fontSize: 18.0,
+                                color: Color(0xFF8c8e98),),
+                              prefixIcon: Icon(
+                                Icons.person,
+                                color: Color(0xFF8c8e98),
+                                size: 30.0,
+                              ),
+                              border: InputBorder.none),
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 40.0,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            if(_formkey.currentState!.validate()){
-                              setState(() {
-                                email=mailcontroller.text;
-                              });
+                          const SizedBox(
+                            height: 30.0,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              if(_formkey.currentState!.validate()){
+                                setState(() {
+                                  email=mailcontroller.text;
+                                }
+                              );
                               resetPassword();
                             }
                           },
@@ -116,21 +129,23 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             width: 140,
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10)),
+                              color: const Color(0xFF273671),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                             child: const Center(
                               child: Text(
                                 "Send Email",
                                 style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold),
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
                         ),
                         const SizedBox(
-                          height: 50.0,
+                          height: 30.0,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -138,7 +153,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             const Text(
                               "Don't have an account?",
                               style: TextStyle(
-                                  fontSize: 18.0, color: Colors.white),
+                                fontSize: 18.0, color: Color(0xFF8c8e98),
+                              ),
                             ),
                             const SizedBox(
                               width: 5.0,
@@ -146,20 +162,23 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             GestureDetector(
                               onTap: () {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const SignUp()));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const SignUp(),
+                                  ),
+                                );
                               },
                               child: const Text(
                                 "Create",
                                 style: TextStyle(
-                                    color: Color.fromARGB(225, 184, 166, 6),
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.w500),
+                                  color: Color(0xFF273671),
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
-                            )
+                            ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),
