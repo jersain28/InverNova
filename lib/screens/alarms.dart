@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invernova/screens/services/notification_service.dart';
 
 class Alarms extends StatefulWidget {
   const Alarms({super.key});
@@ -14,13 +15,13 @@ class _AlarmsState extends State<Alarms> {
       appBar: AppBar(
         title: const Text('Alarms'),
       ),
-      body: const Center(
-        //child: ElevatedButton(
-          //onPressed: () {
-
-          //},
-          child: Text('Show notification'),
-        //),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            mostrarNotificacion();
+          },
+          child: const Text('Show notification'),
+        ),
       ),
     );
   }
