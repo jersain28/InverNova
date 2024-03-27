@@ -1,8 +1,7 @@
 name: invernova
-description: "A new Flutter project."
-publish_to: 'none'
+description: A new Flutter project.
+publish_to: none
 version: 0.1.0
-
 environment:
   sdk: '>=3.2.6 <4.0.0'
 
@@ -15,13 +14,25 @@ dependencies:
   cloud_firestore: ^4.15.8
   the_apple_sign_in: ^1.1.1
   flutter_local_notifications: ^17.0.0
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.1
 
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/InverNovaLogo1.png"
+  adaptive_icon_background: "assets/images/InverNovaLogo1.png"
+  
 flutter:
   uses-material-design: true
   assets:
     - assets/images/InverNovaLogo.jpg
+    - assets/images/InverNovaLogo1.png
+    # - assets/images/google.png
+    # - assets/images/apple.png
+    - assets/images/InverNovaLogo.jpg
+    # - assets/images/google.png

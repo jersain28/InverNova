@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:invernova/screens/alarms.dart';
+import 'package:invernova/screens/home_screen.dart';
 import 'package:invernova/screens/login.dart';
 
 class SignUp extends StatefulWidget {
@@ -37,7 +37,7 @@ class _SignUpState extends State<SignUp> {
         Navigator.push(
             // ignore: use_build_context_synchronously
             context,
-            MaterialPageRoute(builder: (context) => const Alarms(),
+            MaterialPageRoute(builder: (context) => const HomeScreen(),
           ),
         );
       } on FirebaseAuthException catch (e) {
@@ -199,7 +199,7 @@ class _SignUpState extends State<SignUp> {
                       padding: const EdgeInsets.symmetric(
                         vertical: 13.0, horizontal: 2.0),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF273671),
+                        color: const Color.fromARGB(255, 28, 129, 47),
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: const Center(
@@ -282,7 +282,7 @@ class _SignUpState extends State<SignUp> {
               child: const Text(
                 "LogIn",
                 style: TextStyle(
-                  color: Color(0xFF273671),
+                  color:Color.fromARGB(255, 28, 129, 47),
                   fontSize: 20.0,
                   fontWeight: FontWeight.w500),
                 ),

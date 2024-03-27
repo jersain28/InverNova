@@ -1,65 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:invernova/screens/alarms.dart';
 import 'package:invernova/screens/home_screen.dart';
 import 'package:invernova/screens/profile.dart';
-import 'package:invernova/screens/services/notification_service.dart';
 
-class Alarms extends StatefulWidget {
-  const Alarms({super.key});
+class Ligths extends StatefulWidget {
+  const Ligths({super.key});
 
   @override
-  State<Alarms> createState() => _AlarmsState();
+  State<Ligths> createState() => _LigthsState();
 }
 
-class _AlarmsState extends State<Alarms> {
-  int indexNavigation = 0;
+class _LigthsState extends State<Ligths> {
+   int indexNavigation = 0;
 
   openScreen(int index, BuildContext context){
     MaterialPageRoute ruta = MaterialPageRoute(builder: (context) => const HomeScreen());
 
- switch (index) {
-    case 0:
-      ruta = MaterialPageRoute(builder: (context) => const HomeScreen());
+    switch(index){
+      case 0:
+      ruta = MaterialPageRoute(
+        builder: (context) => const HomeScreen());
       break;
-    case 1:
+      case 1:
       ruta = MaterialPageRoute(builder: (context) => const Alarms());
       break;
-    case 2:
-      ruta = MaterialPageRoute(builder: (context) => const Profile());
+      case 2:
+      ruta = MaterialPageRoute(
+        builder: (context) => const Profile());
       break;
-  }
-
-  if (index != indexNavigation) {
+    }
     setState(() {
       indexNavigation = index;
+      Navigator.push(context, ruta);
     });
   }
-
-  Navigator.push(context, ruta);
-}
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Alarms'),
+        title: const Text('Luminosidad 🔦'),
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            mostrarNotificacion();
-          },
-          child: const Text('Show notification'),
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
+       bottomNavigationBar: BottomNavigationBar(
         currentIndex: indexNavigation,
         backgroundColor: const Color.fromARGB(204, 255, 255, 255),
+        unselectedItemColor: const Color.fromARGB(255, 8, 50, 17),
         selectedItemColor: const Color.fromARGB(197, 46, 200, 105),
         onTap: (index) => openScreen(index, context),
-        items:const [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home'
+            label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.warning),
@@ -67,10 +57,10 @@ class _AlarmsState extends State<Alarms> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Perfil'
-            ),
+            label: 'Perfil',
+          ),
         ],
-      )
+      ),
     );
   }
 }

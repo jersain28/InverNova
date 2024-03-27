@@ -134,7 +134,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               width: 140,
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
-                                color: const Color(0xFF273671),
+                                color: const Color.fromARGB(255, 28, 129, 47),
                                 borderRadius: BorderRadius.circular(30),
                               ),
                               child: const Center(
@@ -176,7 +176,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                 child: const Text(
                                   "Create",
                                   style: TextStyle(
-                                    color: Color(0xFF273671),
+                                    color:Color.fromARGB(255, 28, 129, 47),
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.w500,
                                   ),

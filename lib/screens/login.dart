@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:invernova/screens/alarms.dart';
 import 'package:invernova/screens/forgot_password.dart';
+import 'package:invernova/screens/home_screen.dart';
 import 'package:invernova/screens/signup.dart';
 
 class LogIn extends StatefulWidget {
@@ -28,7 +28,7 @@ userLogin()async{
       // ignore: use_build_context_synchronously
       context,
       MaterialPageRoute(
-        builder: (context) => const Alarms(),
+        builder: (context) => const HomeScreen(),
       ),
     );
   }on FirebaseAuthException catch(e){
@@ -157,7 +157,7 @@ userLogin()async{
                         horizontal: 30.0,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF273671),
+                        color: const Color.fromARGB(255, 28, 129, 47),
                         borderRadius: BorderRadius.circular(30),
                         ),
                         child: const Center(
@@ -270,7 +270,7 @@ userLogin()async{
                   child: const Text(
                     "SignUp",
                     style: TextStyle(
-                      color: Color(0xFF273671),
+                      color: Color.fromARGB(255, 28, 129, 47),
                       fontSize: 20.0,
                       fontWeight: FontWeight.w500),
                   ),
