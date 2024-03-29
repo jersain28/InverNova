@@ -1,19 +1,19 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:invernova/screens/alarms.dart';
 import 'package:invernova/screens/home_screen.dart';
+import 'package:invernova/screens/information_screen.dart';
 import 'package:invernova/screens/login.dart';
 import 'package:invernova/screens/profile_screen.dart';
 
-class Profile extends StatefulWidget {
-  const Profile({super.key});
+class Configuration extends StatefulWidget {
+  const Configuration({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _ProfileState createState() => _ProfileState();
+  State<Configuration> createState() => _ConfigurationState();
 }
 
-class _ProfileState extends State<Profile> {
+class _ConfigurationState extends State<Configuration> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
     int indexNavigation = 0;
 
@@ -28,7 +28,7 @@ class _ProfileState extends State<Profile> {
       ruta = MaterialPageRoute(builder: (context) => const Alarms());
       break;
     case 2:
-      ruta = MaterialPageRoute(builder: (context) => const Profile());
+      ruta = MaterialPageRoute(builder: (context) => const Configuration());
       break;
   }
 
@@ -78,7 +78,9 @@ class _ProfileState extends State<Profile> {
               leading: const Icon(Icons.info),
               title: const Text('Información'),
               onTap:() {
-                
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context)=> const InformationApp()));
               },
             ),
             const Divider(),

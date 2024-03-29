@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:invernova/screens/alarms.dart';
+import 'package:invernova/screens/configuration.dart';
 import 'package:invernova/screens/humidity.dart';
 import 'package:invernova/screens/lights.dart';
-import 'package:invernova/screens/profile.dart';
 import 'package:invernova/screens/temperature.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ruta = MaterialPageRoute(builder: (context) => const Alarms());
       break;
     case 2:
-      ruta = MaterialPageRoute(builder: (context) => const Profile());
+      ruta = MaterialPageRoute(builder: (context) => const Configuration());
       break;
   }
 

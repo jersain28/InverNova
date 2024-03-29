@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:invernova/screens/configuration.dart';
 import 'package:invernova/screens/home_screen.dart';
-import 'package:invernova/screens/profile.dart';
 import 'package:invernova/screens/services/notification_service.dart';
 
 class Alarms extends StatefulWidget {
@@ -24,7 +24,7 @@ class _AlarmsState extends State<Alarms> {
       ruta = MaterialPageRoute(builder: (context) => const Alarms());
       break;
     case 2:
-      ruta = MaterialPageRoute(builder: (context) => const Profile());
+      ruta = MaterialPageRoute(builder: (context) => const Configuration());
       break;
   }
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invernova/screens/alarms.dart';
+import 'package:invernova/screens/configuration.dart';
 import 'package:invernova/screens/home_screen.dart';
-import 'package:invernova/screens/profile.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -27,7 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       break;
       case 2:
       ruta = MaterialPageRoute(
-        builder: (context) => const Profile());
+        builder: (context) => const Configuration());
       break;
     }
     setState(() {

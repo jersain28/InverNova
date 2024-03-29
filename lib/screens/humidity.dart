@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invernova/screens/alarms.dart';
+import 'package:invernova/screens/configuration.dart';
 import 'package:invernova/screens/home_screen.dart';
-import 'package:invernova/screens/profile.dart';
 
 class Humidity extends StatefulWidget {
   const Humidity({super.key});
@@ -26,7 +26,7 @@ class _HumidityState extends State<Humidity> {
       break;
       case 2:
       ruta = MaterialPageRoute(
-        builder: (context) => const Profile());
+        builder: (context) => const Configuration());
       break;
     }
     setState(() {
