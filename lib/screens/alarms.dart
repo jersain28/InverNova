@@ -66,8 +66,8 @@ class _AlarmsState extends State<Alarms> {
             label: 'Alarms'
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Perfil'
+            icon: Icon(Icons.settings),
+            label: 'Configuracion'
             ),
         ],
       )

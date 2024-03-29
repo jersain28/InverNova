@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:invernova/screens/alarms.dart';
 import 'package:invernova/screens/home_screen.dart';
 import 'package:invernova/screens/login.dart';
+import 'package:invernova/screens/profile_screen.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -56,27 +57,60 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: const Text('Configuracion'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () {
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
+          children: [
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text('Perfil'),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context, 
+                  MaterialPageRoute(builder: (context)=> const ProfileScreen()));
+              },
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.info),
+              title: const Text('Información'),
+              onTap:() {
                 
               },
-              child: const Text('Cambiar Foto de Perfil'),
             ),
-            const SizedBox(
-              height: 30,
-            ),
-            ElevatedButton(
-              onPressed: _signOut,
-              child: const Text('Cerrar Sesión'),
-            ),
-          ],
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.logout_outlined),
+              title: const Text('Cerrar Sesion'),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context, 
+                  MaterialPageRoute(builder: (context)=> const LogIn()));
+              },
+            )
+            ],
         ),
+        // child: Column(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: <Widget>[
+        //     ElevatedButton(
+        //       onPressed: () {
+                
+        //       },
+        //       child: const Text('Cambiar Foto de Perfil'),
+        //     ),
+        //     const SizedBox(
+        //       height: 30,
+        //     ),
+        //     ElevatedButton(
+        //       onPressed: _signOut,
+        //       child: const Text('Cerrar Sesión'),
+        //     ),
+        //   ],
+        // ),
       ),
         bottomNavigationBar: BottomNavigationBar(
         currentIndex: indexNavigation,
@@ -93,8 +127,8 @@ class _ProfileState extends State<Profile> {
             label: 'Alarms'
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Perfil'
+            icon: Icon(Icons.settings),
+            label: 'Configuracion'
             ),
         ],
       )

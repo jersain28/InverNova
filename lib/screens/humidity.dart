@@ -40,6 +40,9 @@ class _HumidityState extends State<Humidity> {
       appBar: AppBar(
         title: const Text('Humedad ♒'),
       ),
+      body: ListView(
+        children: [buildCard('Datos')],
+      ),
        bottomNavigationBar: BottomNavigationBar(
         currentIndex: indexNavigation,
         backgroundColor: const Color.fromARGB(204, 255, 255, 255),
@@ -60,6 +63,34 @@ class _HumidityState extends State<Humidity> {
             label: 'Perfil',
           ),
         ],
+      ),
+    );
+  }
+   Widget buildCard(String title) {
+    return Card(
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        margin: const EdgeInsets.all(15),
+        color: const Color.fromARGB(255, 215, 237, 199),
+        elevation: 10,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Column(
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 110),
+              Container(
+                padding: const EdgeInsets.all(30),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

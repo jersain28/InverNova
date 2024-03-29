@@ -84,9 +84,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
         bottomNavigationBar: BottomNavigationBar(
-        currentIndex: indexNavigation,
         backgroundColor: const Color.fromARGB(204, 255, 255, 255),
         selectedItemColor: const Color.fromARGB(197, 46, 200, 105),
+        currentIndex: indexNavigation,
         onTap: (index) => openScreen(index, context),
         items:const [
           BottomNavigationBarItem(
@@ -98,8 +98,8 @@ class _HomeScreenState extends State<HomeScreen> {
             label: 'Alarms'
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Perfil'
+            icon: Icon(Icons.settings),
+            label: 'Configuracion'
             ),
         ],
       ),
