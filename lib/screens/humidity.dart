@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invernova/graphic/graphic_humi.dart';
 import 'package:invernova/screens/alarms.dart';
 import 'package:invernova/screens/configuration.dart';
 import 'package:invernova/screens/home_screen.dart';
@@ -84,7 +85,8 @@ class _HumidityState extends State<Humidity> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 110),
+              const SizedBox(height: 10),
+              const WaterLevel(),
               Container(
                 padding: const EdgeInsets.all(30),
               ),

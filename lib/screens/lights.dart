@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invernova/graphic/graphic_light.dart';
 import 'package:invernova/screens/alarms.dart';
 import 'package:invernova/screens/configuration.dart';
 import 'package:invernova/screens/home_screen.dart';
@@ -85,6 +86,7 @@ class _LigthsState extends State<Ligths> {
                 ),
               ),
               const SizedBox(height: 110),
+              const RadialRangeSliderStateTypes(Key('Radial')),
               Container(
                 padding: const EdgeInsets.all(30),
               ),
