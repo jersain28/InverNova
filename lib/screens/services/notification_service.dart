@@ -7,18 +7,18 @@ Future<void>initNotifications() async {
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('in_notification');
 
-  //const DarwinInitializationSettings initializationSettingsIOS = DarwinInitializationSettings();
+  const DarwinInitializationSettings initializationSettingsIOS = DarwinInitializationSettings();
 
   const InitializationSettings initializationSettings = InitializationSettings(
     android: initializationSettingsAndroid,
-    //iOS: initializationSettingsIOS,
+    iOS: initializationSettingsIOS,
   );
 
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   
 }
 
-Future<void>mostrarNotificacion() async {
+Future<void>mostrarNotificacion(String titulo, String mensaje) async {
   const AndroidNotificationDetails androidNotificationDetails =
       AndroidNotificationDetails(
         'your channel id',
@@ -33,8 +33,19 @@ Future<void>mostrarNotificacion() async {
 
   await flutterLocalNotificationsPlugin.show(
     1,
-    'Nombre de notificacion',
-    'Esta es una notificacion',
+    'Alerta Configurada',
+    'Se ha agregado una nueva alerta',
     notificationDetails
   );
+}
+void mostrarAlertaTemperatura() {
+  mostrarNotificacion('Alerta de Temperatura Agregada', 'Se ha agregado una nueva alerta');
+}
+
+void mostrarAlertaHumedad() {
+  mostrarNotificacion('Alerta de Humedad Agregada', 'Se ha agregado una nueva alerta');
+}
+
+void mostrarAlertaLuminosidad() {
+  mostrarNotificacion('Alerta de Luminosidad Agregada', 'Se ha agregado una nueva alerta');
 }

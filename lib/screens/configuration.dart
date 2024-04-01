@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:invernova/screens/alarms.dart';
+import 'package:invernova/screens/alarms_screen.dart/alarms.dart';
 import 'package:invernova/screens/home_screen.dart';
 import 'package:invernova/screens/information_screen.dart';
 import 'package:invernova/screens/login.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invernova/graphic/graphic_light.dart';
-import 'package:invernova/screens/alarms.dart';
+import 'package:invernova/screens/alarms_screen.dart/alarms.dart';
 import 'package:invernova/screens/configuration.dart';
 import 'package:invernova/screens/home_screen.dart';
 
