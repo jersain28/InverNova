@@ -116,22 +116,23 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
                 title,
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                ),
+                ),  
               ),
-              const SizedBox(height: 110),
+            const SizedBox(height: 100),
               Container(
-                padding: const EdgeInsets.all(30),
+                padding: const EdgeInsets.all(20),
                 child: Text(
                   'Contenido de $title',
                   textAlign: TextAlign.center,
                 ),
-              )
+              ),
             ],
           ),
         ),

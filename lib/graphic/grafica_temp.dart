@@ -5,6 +5,7 @@ class HeatMeter extends StatefulWidget {
   const HeatMeter(Key key) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _HeatMeterState createState() => _HeatMeterState();
 }
 
@@ -19,6 +20,7 @@ class _HeatMeterState extends State<HeatMeter> {
       minorTicksPerInterval: 0,
       animateAxis: true,
       labelFormatterCallback: (String value) {
+        // ignore: prefer_interpolation_to_compose_strings
         return value + '°c';
       },
       axisTrackStyle: const LinearAxisTrackStyle(thickness: 1),
@@ -45,6 +47,7 @@ class _HeatMeterState extends State<HeatMeter> {
             height: 45,
             child: Center(
               child: Text(
+                // ignore: prefer_interpolation_to_compose_strings
                 _widgetPointerWithGradientValue.toStringAsFixed(0) + '°C',
                 style: TextStyle(
                   fontWeight: FontWeight.w500,

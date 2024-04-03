@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invernova/screens/configuration.dart';
 import 'package:invernova/screens/home_screen.dart';
-import 'package:invernova/screens/services/notification_service.dart';
+import 'package:invernova/services/notification_service.dart';
 
 class Alarms extends StatefulWidget {
   const Alarms({super.key});

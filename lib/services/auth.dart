@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:invernova/screens/home_screen.dart';
-import 'package:invernova/screens/services/database.dart';
+import 'package:invernova/services/database.dart';
 import 'package:the_apple_sign_in/the_apple_sign_in.dart';
 
 class AuthMethods {

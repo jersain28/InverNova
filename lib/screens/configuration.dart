@@ -41,6 +41,7 @@ class _ConfigurationState extends State<Configuration> {
   Navigator.push(context, ruta);
 }
 
+  // ignore: unused_element
   Future<void> _signOut() async {
   // Redirigir primero a la pantalla de inicio de sesión
   Navigator.pushReplacement(
@@ -70,7 +71,7 @@ class _ConfigurationState extends State<Configuration> {
               onTap: () {
                 Navigator.pushReplacement(
                   context, 
-                  MaterialPageRoute(builder: (context)=> const ProfileScreen()));
+                  MaterialPageRoute(builder: (context)=> const PerfilScreen()));
               },
             ),
             const Divider(),

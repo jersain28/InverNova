@@ -74,6 +74,7 @@ class _WaterLevelState extends State<WaterLevel> {
                 height: 20,
                 child: Center(
                   child: Text(
+                    // ignore: prefer_interpolation_to_compose_strings
                     _level.toStringAsFixed(0) + ' ml',
                     style: const TextStyle(
                         color: Colors.black,
