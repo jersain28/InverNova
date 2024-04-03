@@ -50,8 +50,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             padding: const EdgeInsets.all(20.0),
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
-              child: const Image(image: AssetImage('assets/images/InverNovaLogo.jpg'),
-                //fit: BoxFit.cover,
+              child: const Image(
+                image: AssetImage('assets/images/InverNovaLogo.jpg'),
               ),
             ),
           ),
@@ -126,71 +126,72 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               if(_formkey.currentState!.validate()){
                                 setState(() {
                                   email=mailcontroller.text;
-                                });
-                                resetPassword();
-                              }
-                            },
-                            child: Container(
-                              width: 140,
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 28, 129, 47),
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  "Send Email",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                },
+                              );
+                              resetPassword();
+                            }
+                          },
+                          child: Container(
+                            width: 140,
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 28, 129, 47),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                "Send Email",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 30.0,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                "Don't have an account?",
-                                style: TextStyle(
-                                  fontSize: 18.0, color: Color(0xFF8c8e98),
-                                ),
+                        ),
+                        const SizedBox(
+                          height: 30.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              "Don't have an account?",
+                              style: TextStyle(
+                                fontSize: 18.0, color: Color(0xFF8c8e98),
                               ),
-                              const SizedBox(
-                                width: 5.0,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const SignUp(),
-                                    ),
-                                  );
-                                },
-                                child: const Text(
-                                  "Create",
-                                  style: TextStyle(
-                                    color:Color.fromARGB(255, 28, 129, 47),
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.w500,
+                            ),
+                            const SizedBox(
+                              width: 5.0,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const SignUp(),
                                   ),
+                                );
+                              },
+                              child: const Text(
+                                "Create",
+                                style: TextStyle(
+                                  color:Color.fromARGB(255, 28, 129, 47),
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ),
-        ],
-      ),
-    );
+              ),
+          ],
+        ),
+      );
+    }
   }
-}

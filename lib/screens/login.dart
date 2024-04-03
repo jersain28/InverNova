@@ -65,7 +65,6 @@ userLogin()async{
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
               child: const Image(image: AssetImage('assets/images/InverNovaLogo.jpg'),
-                //fit: BoxFit.cover,
               ),
             ),
           ),

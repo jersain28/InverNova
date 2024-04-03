@@ -82,17 +82,12 @@ class _SignupScreenState extends State<SignupScreen> {
               padding: const EdgeInsets.all(20),
               child: ElevatedButton(
                 onPressed: () async {
-                  // Registrar el usuario en Firestore
                   await firebase.collection('usuarios').add({
                     'email': email.text,
                     'fullName': fullName.text,
                     'nickName': nickName.text,
                     'password': password.text
-                    // Puedes agregar más campos si es necesario
                   });
-
-                  // Navegar a la pantalla HomeScreen
-                  // ignore: use_build_context_synchronously
                   // Navigator.pushReplacement(
                   //   context,
                   //   MaterialPageRoute(

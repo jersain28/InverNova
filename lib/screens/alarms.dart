@@ -1,7 +1,11 @@
+import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:invernova/screens/configuration.dart';
 import 'package:invernova/screens/home_screen.dart';
+import 'package:invernova/screens/login.dart';
 import 'package:invernova/screens/services/notification_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Alarm {
   String name;
@@ -13,6 +17,22 @@ class Alarm {
     required this.valueRange,
     this.activated = false,
   });
+
+Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'valueRange': [valueRange.start, valueRange.end],
+      'activated': activated,
+    };
+  }
+
+  factory Alarm.fromJson(Map<String, dynamic> json) {
+    return Alarm(
+      name: json['name'],
+      valueRange: RangeValues(json['valueRange'][0], json['valueRange'][1]),
+      activated: json['activated'],
+    );
+  }
 }
 
 class Alarms extends StatefulWidget {
@@ -38,7 +58,7 @@ class _AlarmsState extends State<Alarms> {
       case 1:
         ruta = MaterialPageRoute(builder: (context) => const Alarms());
         break;
-      case 2:
+      case 2: 
         ruta = MaterialPageRoute(builder: (context) => const Configuration());
         break;
     }
@@ -52,15 +72,59 @@ class _AlarmsState extends State<Alarms> {
     Navigator.pushReplacement(context, ruta);
   }
 
+  // ignore: unused_element
+  Future<void> _signOut() async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.remove('temperatureAlarms');
+  await prefs.remove('humidityAlarms');
+  await prefs.remove('luminosityAlarms');
+
+  await FirebaseAuth.instance.signOut();
+
+  Navigator.pushReplacement(
+    // ignore: use_build_context_synchronously
+    context,
+    MaterialPageRoute(builder: (context) => const LogIn()),
+  );
+  }
+
   @override
   void initState() {
     super.initState();
+    if (FirebaseAuth.instance.currentUser != null) {
+      _loadAlarms();
+    }
+  }
+
+  Future<void> _loadAlarms() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      temperatureAlarms = _getAlarmsFromPrefs(prefs, 'temperatureAlarms');
+      humidityAlarms = _getAlarmsFromPrefs(prefs, 'humidityAlarms');
+      luminosityAlarms = _getAlarmsFromPrefs(prefs, 'luminosityAlarms');
+    });
+  }
+
+  List<Alarm> _getAlarmsFromPrefs(SharedPreferences prefs, String key) {
+    final alarmsJson = prefs.getStringList(key);
+    if (alarmsJson == null) {
+      return [];
+    }
+    return alarmsJson.map((json) => Alarm.fromJson(jsonDecode(json))).toList();
+  }
+
+  Future<void> _saveAlarms() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setStringList('temperatureAlarms', temperatureAlarms.map((alarm) => jsonEncode(alarm.toJson())).toList());
+    prefs.setStringList('humidityAlarms', humidityAlarms.map((alarm) => jsonEncode(alarm.toJson())).toList());
+    prefs.setStringList('luminosityAlarms', luminosityAlarms.map((alarm) => jsonEncode(alarm.toJson())).toList());
   }
 
   void _toggleAlarmActivation(List<Alarm> alarms, int index) {
     if (alarms.where((alarm) => alarm.activated).length < 2 || alarms[index].activated) {
       setState(() {
         alarms[index].activated = !alarms[index].activated;
+        _saveAlarms();
       });
     } else {
       showDialog(
@@ -164,7 +228,7 @@ class _AlarmsState extends State<Alarms> {
           ],
         );
       },
-    );
+    ).then((_) => _saveAlarms());
   }
 
   void _addHumidityAlert() {
@@ -249,7 +313,7 @@ class _AlarmsState extends State<Alarms> {
           ],
         );
       },
-    );
+    ).then((_) => _saveAlarms());
   }
 
   void _addLuminosityAlert() {
@@ -257,8 +321,7 @@ class _AlarmsState extends State<Alarms> {
       context: context,
       builder: (BuildContext context) {
         String alertName = '';
-        RangeValues selectedRange = const RangeValues(0, 2000);
-
+        RangeValues selectedRange = const RangeValues(0, 100);
         return AlertDialog(
           title: const Text('Agregar Alerta de Luminosidad'),
           content: Column(
@@ -275,8 +338,8 @@ class _AlarmsState extends State<Alarms> {
               RangeSlider(
                 values: selectedRange,
                 min: 0,
-                max: 2000,
-                divisions: 200,
+                max: 100,
+                divisions: 100,
                 onChanged: (RangeValues values) {
                   selectedRange = values;
                 },
@@ -334,13 +397,14 @@ class _AlarmsState extends State<Alarms> {
           ],
         );
       },
-    );
+    ).then((_) => _saveAlarms());
   }
 
   void _deleteAlarm(List<Alarm> alarms, int index) {
     setState(() {
       alarms.removeAt(index);
     });
+    _saveAlarms();
   }
 
   void _editAlarm(List<Alarm> alarms, int index) {
@@ -349,7 +413,6 @@ class _AlarmsState extends State<Alarms> {
       builder: (BuildContext context) {
         String alertName = alarms[index].name;
         RangeValues selectedRange = alarms[index].valueRange;
-
         return AlertDialog(
           title: const Text('Editar Alerta'),
           content: Column(
@@ -389,6 +452,7 @@ class _AlarmsState extends State<Alarms> {
                   alarms[index].name = alertName;
                   alarms[index].valueRange = selectedRange;
                 });
+                _saveAlarms();
                 Navigator.of(context).pop();
               },
               child: const Text('Guardar'),
