@@ -71,24 +71,24 @@ class _ProfileScreenState extends State<PerfilScreen> {
       appBar: AppBar(
         title: const Text('Perfil de Usuario'),
       ),
+     
       body: SingleChildScrollView(
         child: Column(
           children: [
             GestureDetector(
                       onTap: () => _elegirImagen(),
                       child: Container(
-                        height: 200,
+                        height: 400,
                         decoration: BoxDecoration(
-                        color: Colors.grey[200], // Color de marcador
                         image: _imagenSeleccionada != null
                           ? DecorationImage(
                               image: FileImage(_imagenSeleccionada!),
-                              fit: BoxFit.cover,  
+                              fit: BoxFit.fill,  
                           )
                           : null,
                         ),
                         child: _imagenSeleccionada == null
-                        ? const Icon(Icons.add_photo_alternate_rounded, size: 200, color: Color.fromARGB(255, 182, 181, 181))
+                        ? const CircleAvatar( radius: 160, backgroundColor: Color.fromARGB(90, 125, 123, 123))
                         : null,
                         ),
                     ),
@@ -131,13 +131,13 @@ class _ProfileScreenState extends State<PerfilScreen> {
                   ),
                           const SizedBox(height: 20),
                             ElevatedButton(
-                              onPressed: () {
-                                // Muestra una SnackBar para confirmar que se guardó
+                              onPressed: () async {
+                                
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text('Información de perfil guardada'),
                                   ),
-                                );    
+                                );
                               },
                               child: const Text('Guardar'),
                             ),
@@ -147,26 +147,26 @@ class _ProfileScreenState extends State<PerfilScreen> {
                     ],
                   ),
                 ),
-        bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _indiceSeleccionado,
-        backgroundColor: const Color.fromARGB(204, 255, 255, 255),
-        selectedItemColor: const Color.fromARGB(197, 46, 200, 105),
-        onTap: _seleccionarElemento,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.warning),
-            label: 'Alarmas',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Configuración',
-          ),
-        ],
-      ),
+                bottomNavigationBar: BottomNavigationBar(
+                currentIndex: _indiceSeleccionado,
+                backgroundColor: const Color.fromARGB(204, 255, 255, 255),
+                selectedItemColor: const Color.fromARGB(197, 46, 200, 105),
+                onTap: _seleccionarElemento,
+                  items: const [
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home),
+                      label: 'Home',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.warning),
+                      label: 'Alarmas',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.settings),
+                      label: 'Configuración',
+                    ),
+                  ],
+                ),
     );
   }
 }
