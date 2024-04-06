@@ -32,9 +32,5 @@ Future<void>mostrarNotificacion() async {
   );
 
   await flutterLocalNotificationsPlugin.show(
-    1,
-    'Nombre de notificacion',
-    'Esta es una notificacion',
-    notificationDetails
-  );
+      1, 'Alerta', 'Humedad alta. Comienza el riego', notificationDetails);
 }

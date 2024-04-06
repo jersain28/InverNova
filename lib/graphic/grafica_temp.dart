@@ -5,12 +5,11 @@ class HeatMeter extends StatefulWidget {
   const HeatMeter(Key key) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _HeatMeterState createState() => _HeatMeterState();
+  HeatMeterState createState() => HeatMeterState();
 }
 
-class _HeatMeterState extends State<HeatMeter> {
-  double _widgetPointerWithGradientValue = 60;
+class HeatMeterState extends State<HeatMeter> {
+  double widgetPointerWithGradientValue = 60;
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +19,7 @@ class _HeatMeterState extends State<HeatMeter> {
       minorTicksPerInterval: 0,
       animateAxis: true,
       labelFormatterCallback: (String value) {
-        // ignore: prefer_interpolation_to_compose_strings
-        return value + '°c';
+        return '$value°C'; // Utilizando interpolación de cadenas
       },
       axisTrackStyle: const LinearAxisTrackStyle(thickness: 1),
       barPointers: <LinearBarPointer>[
@@ -39,7 +37,7 @@ class _HeatMeterState extends State<HeatMeter> {
       ],
       markerPointers: <LinearMarkerPointer>[
         LinearWidgetPointer(
-          value: _widgetPointerWithGradientValue,
+          value: widgetPointerWithGradientValue,
           offset: 26,
           position: LinearElementPosition.outside,
           child: SizedBox(
@@ -47,14 +45,13 @@ class _HeatMeterState extends State<HeatMeter> {
             height: 45,
             child: Center(
               child: Text(
-                // ignore: prefer_interpolation_to_compose_strings
-                _widgetPointerWithGradientValue.toStringAsFixed(0) + '°C',
+                '${widgetPointerWithGradientValue.toStringAsFixed(0)}°C', 
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 14,
-                  color: _widgetPointerWithGradientValue < 20
+                  color: widgetPointerWithGradientValue < 20
                       ? Colors.green
-                      : _widgetPointerWithGradientValue < 60
+                      : widgetPointerWithGradientValue < 60
                           ? Colors.orange
                           : Colors.red,
                 ),
@@ -66,13 +63,13 @@ class _HeatMeterState extends State<HeatMeter> {
           offset: 25,
           onChanged: (dynamic value) {
             setState(() {
-              _widgetPointerWithGradientValue = value as double;
+              widgetPointerWithGradientValue = value as double;
             });
           },
-          value: _widgetPointerWithGradientValue,
-          color: _widgetPointerWithGradientValue < 20
+          value: widgetPointerWithGradientValue,
+          color: widgetPointerWithGradientValue < 20
               ? Colors.green
-              : _widgetPointerWithGradientValue < 60
+              : widgetPointerWithGradientValue < 60
                   ? Colors.orange
                   : Colors.red,
         ),

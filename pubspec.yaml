@@ -17,6 +17,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   syncfusion_flutter_gauges: ^25.1.37
   firebase_storage: ^11.7.0
+  firebase_database: ^10.0.6
   image_picker: ^1.0.7
   uuid: ^4.3.3
 
