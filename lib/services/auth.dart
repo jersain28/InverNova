@@ -42,9 +42,13 @@ class AuthMethods {
       await DatabaseMethods()
           .addUser(userDetails.uid, userInfoMap)
           .then((value) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const HomeScreen()));
-      });
+          Navigator.push(
+            context, MaterialPageRoute(
+              builder: (context) => const HomeScreen(),
+            ),
+          );
+        }
+      );
     }
   }
 

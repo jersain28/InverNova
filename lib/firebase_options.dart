@@ -45,37 +45,44 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyBWVseUvz41t9SNMp1Ztl28W21Dyx5sXyg',
-    appId: '1:379116688959:web:a59828de61174544694a8a',
-    messagingSenderId: '379116688959',
-    projectId: 'invernova-69060',
     authDomain: 'invernova-69060.firebaseapp.com',
+    databaseURL: 'https://invernova-69060-default-rtdb.firebaseio.com',
+    projectId: 'invernova-69060',
     storageBucket: 'invernova-69060.appspot.com',
+    messagingSenderId: '379116688959',
+    appId: '1:379116688959:web:a59828de61174544694a8a',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyA4X0fPlyrid-Hy31ri3rdzkZRG2TvbU-0',
-    appId: '1:379116688959:android:b5ad9005464c65c5694a8a',
-    messagingSenderId: '379116688959',
+    authDomain: 'invernova-69060.firebaseapp.com',
+    databaseURL: 'https://invernova-69060-default-rtdb.firebaseio.com',
     projectId: 'invernova-69060',
     storageBucket: 'invernova-69060.appspot.com',
+    messagingSenderId: '379116688959',
+    appId: '1:379116688959:android:b5ad9005464c65c5694a8a',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDxh5gVGGtozVo_8LrXsimhB--4E0ITAw4',
-    appId: '1:379116688959:ios:3f86cd078f623292694a8a',
-    messagingSenderId: '379116688959',
+    authDomain: 'invernova-69060.firebaseapp.com',
+    databaseURL: 'https://invernova-69060-default-rtdb.firebaseio.com',
     projectId: 'invernova-69060',
     storageBucket: 'invernova-69060.appspot.com',
+    messagingSenderId: '379116688959',
+    appId: '1:379116688959:ios:3f86cd078f623292694a8a',
     iosClientId: '379116688959-ek1qa546nm48nf7mphjng006d3hjbd1m.apps.googleusercontent.com',
     iosBundleId: 'com.example.invernova',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyDxh5gVGGtozVo_8LrXsimhB--4E0ITAw4',
-    appId: '1:379116688959:ios:be7c956141b259a6694a8a',
-    messagingSenderId: '379116688959',
+    authDomain: 'invernova-69060.firebaseapp.com',
+    databaseURL: 'https://invernova-69060-default-rtdb.firebaseio.com',
     projectId: 'invernova-69060',
     storageBucket: 'invernova-69060.appspot.com',
+    messagingSenderId: '379116688959',
+    appId: '1:379116688959:ios:be7c956141b259a6694a8a',
     iosClientId: '379116688959-a4raci6nq129sp5pfgk1vepuhsb9omji.apps.googleusercontent.com',
     iosBundleId: 'com.example.invernova.RunnerTests',
   );

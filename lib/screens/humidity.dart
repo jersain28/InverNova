@@ -40,6 +40,18 @@ class _HumidityState extends State<Humidity> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Humedad ♒'),
+        actions: [
+          IconButton(icon: const Hero(
+          tag: 'lightbulb',
+          child: Icon(Icons.lightbulb_outline,
+          color: Colors.white,
+          ),
+        ),
+        onPressed: () {
+          _showTipsDialogHumidity(context);
+          },
+        ),
+      ],
       ),
       body: ListView(
         children: [buildCard('Datos')],
@@ -97,3 +109,34 @@ class _HumidityState extends State<Humidity> {
     );
   }
 }
+
+void _showTipsDialogHumidity(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Tip'),
+          content: const SingleChildScrollView(
+            child: Column(
+              children: [
+                Card(
+                  child: ListTile(
+                    title: Text('Sobre la Humedad'),
+                    subtitle: Text(''),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Entendido'),
+            ),
+          ],
+        );
+      },
+    );
+  }

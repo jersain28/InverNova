@@ -1,7 +1,13 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:invernova/screens/alarms.dart';
 import 'package:invernova/screens/configuration.dart';
 import 'package:invernova/screens/home_screen.dart';
+import 'package:uuid/uuid.dart';
+
 
 class PerfilScreen extends StatefulWidget {
   const PerfilScreen({super.key});
@@ -12,6 +18,32 @@ class PerfilScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<PerfilScreen> {
   int _indiceSeleccionado = 0; // Se usa _ para variables privadas
+  File? _imagenSeleccionada; // Para almacenar la imagen elegida 
+
+
+  Future<void> _elegirImagen() async {
+    final imagenElegida = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (imagenElegida != null) {
+        setState(() {
+            _imagenSeleccionada = File(imagenElegida.path);
+        });
+    }
+  }
+
+  Future<void> _subirImagen() async {
+    try {
+      final referenciaImagen = firebase_storage.FirebaseStorage.instance.ref('imagenes_perfil/${const Uuid().v4()}');
+      final tareaSubida = referenciaImagen.putFile(_imagenSeleccionada!);
+      await tareaSubida;
+      final urlImagen = await referenciaImagen.getDownloadURL();
+      // Almacena la URL en tu base de datos o úsala como necesites
+      print('Imagen subida exitosamente: $urlImagen');
+    } catch (error) {
+      print('Error al subir la imagen: $error');
+      // Muestra una barra emergente o un diálogo al usuario con un mensaje de error
+    }
+  } 
+
 
   void _seleccionarElemento(int indice) {
     setState(() {
@@ -39,18 +71,30 @@ class _ProfileScreenState extends State<PerfilScreen> {
       appBar: AppBar(
         title: const Text('Perfil de Usuario'),
       ),
+     
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Aquí va el contenido de tu perfil (imagen, información, etc.)
-            Container(
-              height: 200,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/InverNovaLogo1.png'),
-                  fit: BoxFit.cover,
+            GestureDetector(
+              onTap: () => _elegirImagen(),
+              child: Container(
+                height: 400,
+                decoration: BoxDecoration(
+                image: _imagenSeleccionada != null
+                  ? DecorationImage(
+                    image: FileImage(_imagenSeleccionada!),
+                    fit: BoxFit.fill,  
+                  )
+                  : null,
                 ),
+                child: _imagenSeleccionada == null
+                ? const CircleAvatar( radius: 160, backgroundColor: Color.fromARGB(90, 125, 123, 123))
+              : null,
               ),
+            ),
+            ElevatedButton(
+              onPressed: _imagenSeleccionada != null ? () async => _subirImagen() : null,
+              child: _imagenSeleccionada != null ? const Text('Guardar') : const Text('Selecciona una Imagen'),
             ),
             Container(
               padding: const EdgeInsets.all(20),
@@ -85,23 +129,29 @@ class _ProfileScreenState extends State<PerfilScreen> {
                       border: OutlineInputBorder(),
                     ),
                   ),
-                 const SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                                
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Información de perfil guardada'),
+                        ),
+                      );
+                    },
                     child: const Text('Guardar'),
                   ),
                 ],
               ),
             ),
-            // ... (Agrega más contenido del perfil si es necesario)
           ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _indiceSeleccionado,
-        backgroundColor: const Color.fromARGB(204, 255, 255, 255),
-        selectedItemColor: const Color.fromARGB(197, 46, 200, 105),
-        onTap: _seleccionarElemento,
+      currentIndex: _indiceSeleccionado,
+      backgroundColor: const Color.fromARGB(204, 255, 255, 255),
+      selectedItemColor: const Color.fromARGB(197, 46, 200, 105),
+      onTap: _seleccionarElemento,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

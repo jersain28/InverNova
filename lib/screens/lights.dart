@@ -40,6 +40,18 @@ class _LigthsState extends State<Ligths> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Luminosidad 🔦'),
+        actions: [
+          IconButton(icon: const Hero(
+          tag: 'lightbulb',
+          child: Icon(Icons.lightbulb_outline,
+          color: Colors.white,
+          ),
+        ),
+        onPressed: () {
+          _showTipsDialogLight(context);
+          },
+        ),
+      ],
       ),
       body: ListView(
         children: [buildCard('Datos')],
@@ -97,3 +109,34 @@ class _LigthsState extends State<Ligths> {
     );
   }
 }
+
+void _showTipsDialogLight(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Tip'),
+          content: const SingleChildScrollView(
+            child: Column(
+              children: [
+                Card(
+                  child: ListTile(
+                    title: Text('Sobre la Iluminación'),
+                    subtitle: Text(''),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Entendido'),
+            ),
+          ],
+        );
+      },
+    );
+  }

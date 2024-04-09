@@ -5,6 +5,8 @@ import 'package:invernova/screens/home_screen.dart';
 import 'package:invernova/screens/information_screen.dart';
 import 'package:invernova/screens/login.dart';
 import 'package:invernova/screens/profile_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class Configuration extends StatefulWidget {
   const Configuration({super.key});
@@ -14,8 +16,7 @@ class Configuration extends StatefulWidget {
 }
 
 class _ConfigurationState extends State<Configuration> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-    int indexNavigation = 0;
+    int indexNavigation = 2;
 
   openScreen(int index, BuildContext context){
     MaterialPageRoute ruta = MaterialPageRoute(builder: (context) => const HomeScreen());
@@ -43,15 +44,13 @@ class _ConfigurationState extends State<Configuration> {
 
   // ignore: unused_element
   Future<void> _signOut() async {
-  // Redirigir primero a la pantalla de inicio de sesión
-  Navigator.pushReplacement(
-    // ignore: use_build_context_synchronously
-    context,
-    MaterialPageRoute(builder: (context) => const LogIn()),
-  );
+    await FirebaseAuth.instance.signOut();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.remove('userId');
 
-  // Realizar la operación de cierre de sesión
-  await _auth.signOut();
+  await FirebaseAuth.instance.signOut();
+  // ignore: use_build_context_synchronously
+  Navigator.pushReplacementNamed(context, '/login');
 }
 
   @override
@@ -81,20 +80,28 @@ class _ConfigurationState extends State<Configuration> {
               onTap:() {
                 Navigator.push(
                   context, 
-                  MaterialPageRoute(builder: (context)=> const InformationApp()));
+                  MaterialPageRoute(
+                    builder: (context)=> const InformationApp(),
+                  ),
+                );
               },
             ),
             const Divider(),
             ListTile(
               leading: const Icon(Icons.logout_outlined),
               title: const Text('Cerrar Sesion'),
-              onTap: () {
+              onTap: () async {
+                await FirebaseAuth.instance.signOut();
                 Navigator.pushReplacement(
+                  // ignore: use_build_context_synchronously
                   context, 
-                  MaterialPageRoute(builder: (context)=> const LogIn()));
+                  MaterialPageRoute(
+                    builder: (context)=> const LogIn(),
+                  ),
+                );
               },
             )
-            ],
+          ],
         ),
         // child: Column(
         //   mainAxisAlignment: MainAxisAlignment.center,
@@ -115,24 +122,24 @@ class _ConfigurationState extends State<Configuration> {
         //   ],
         // ),
       ),
-        bottomNavigationBar: BottomNavigationBar(
-        currentIndex: indexNavigation,
-        backgroundColor: const Color.fromARGB(204, 255, 255, 255),
-        selectedItemColor: const Color.fromARGB(197, 46, 200, 105),
-        onTap: (index) => openScreen(index, context),
-        items:const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home'
+      bottomNavigationBar: BottomNavigationBar(
+      currentIndex: indexNavigation,
+      backgroundColor: const Color.fromARGB(204, 255, 255, 255),
+      selectedItemColor: const Color.fromARGB(197, 46, 200, 105),
+      onTap: (index) => openScreen(index, context),
+      items:const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home'
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.warning),
+          label: 'Alarms'
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.settings),
+          label: 'Configuracion'
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.warning),
-            label: 'Alarms'
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Configuracion'
-            ),
         ],
       )
     );

@@ -46,11 +46,22 @@ class _HomeScreenState extends State<HomeScreen> {
         style: TextStyle(
           fontSize: 30,
           color: Colors.white,  
+          ),
         ),
+        actions: [
+          IconButton(icon: const Hero(
+          tag: 'lightbulb',
+          child: Icon(Icons.lightbulb_outline,
+          color: Colors.white,
+          ),
         ),
-        automaticallyImplyLeading: false,
+        onPressed: () {
+          _showTipsDialogMain(context);
+          },
+        ),
+      ],
       ),
-          body: ListView(
+        body: ListView(
         children: [
           GestureDetector(
             onTap: () {
@@ -140,3 +151,34 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+void _showTipsDialogMain(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Tip'),
+          content: const SingleChildScrollView(
+            child: Column(
+              children: [
+                Card(
+                  child: ListTile(
+                    title: Text('Sobre el monitoreo de datos'),
+                    subtitle: Text('La información recopilada con los sensores se actualiza constantemente, esta información te ayudará a mantener los valores de temperatura, humedad y luminosidad dentro del rango optimo, ya sea para un cultivo de jitomate o cualquier otro tipo de hortalizas.'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Entendido'),
+            ),
+          ],
+        );
+      },
+    );
+  }

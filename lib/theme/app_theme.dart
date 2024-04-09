@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class AppTheme{
   // Colores primarios
-  static const primaryColor = Color.fromRGBO(27, 96, 25, 0.925);
+  static const primaryColor = Color.fromRGBO(27, 152, 22, 0.922);
   // Colores de fondo
   static const backColor = Color.fromRGBO(255, 255, 255, 1);
   // Color secundario

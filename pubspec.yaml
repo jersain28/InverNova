@@ -18,6 +18,9 @@ dependencies:
   syncfusion_flutter_gauges: ^25.1.37
   firebase_storage: ^11.7.0
   image_picker: ^1.0.7
+  shared_preferences: ^2.2.2
+  firebase_database: ^10.5.0
+  uuid: ^4.4.0
 
 dev_dependencies:
   flutter_test:
