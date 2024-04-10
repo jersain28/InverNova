@@ -7,7 +7,6 @@ import 'package:invernova/screens/login.dart';
 import 'package:invernova/screens/profile_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class Configuration extends StatefulWidget {
   const Configuration({super.key});
 
@@ -38,7 +37,6 @@ class _ConfigurationState extends State<Configuration> {
       indexNavigation = index;
     });
   }
-
   Navigator.push(context, ruta);
 }
 
@@ -103,24 +101,6 @@ class _ConfigurationState extends State<Configuration> {
             )
           ],
         ),
-        // child: Column(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   children: <Widget>[
-        //     ElevatedButton(
-        //       onPressed: () {
-                
-        //       },
-        //       child: const Text('Cambiar Foto de Perfil'),
-        //     ),
-        //     const SizedBox(
-        //       height: 30,
-        //     ),
-        //     ElevatedButton(
-        //       onPressed: _signOut,
-        //       child: const Text('Cerrar Sesión'),
-        //     ),
-        //   ],
-        // ),
       ),
       bottomNavigationBar: BottomNavigationBar(
       currentIndex: indexNavigation,

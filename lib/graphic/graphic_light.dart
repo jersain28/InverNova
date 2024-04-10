@@ -1,32 +1,36 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
+import 'package:firebase_database/firebase_database.dart'; 
 
 class RadialRangeSliderStateTypes extends StatefulWidget {
   const RadialRangeSliderStateTypes(Key key) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _RadialRangeSliderStateTypesState createState() => _RadialRangeSliderStateTypesState();
+  RadialRangeSliderStateTypesState createState() => RadialRangeSliderStateTypesState();
 }
 
-class _RadialRangeSliderStateTypesState extends State<RadialRangeSliderStateTypes> {
-  bool _enableDragging = true;
-  double _secondMarkerValue = 30;
-  double _firstMarkerValue = 0;
-  double _markerSize = 30;
-  final double _annotationFontSize = 25;
-  String _annotationValue1 = '0';
-  String _annotationValue2 = '30%';
+class RadialRangeSliderStateTypesState extends State<RadialRangeSliderStateTypes> {
+  late DatabaseReference luminosityRef;
+  late String luminosity = '0'; 
+
+  @override
+  void initState() {
+    super.initState();
+    luminosityRef = FirebaseDatabase.instance.ref().child('datos_luminosidad');
+    luminosityRef.onValue.listen((event) {
+      final data = event.snapshot.value as Map<dynamic, dynamic>?;
+      if (data != null && data.containsKey('luminosidad')) {
+        setState(() {
+          final luminosityString = data['luminosidad'] as String;
+          final cleanedLuminosityString = luminosityString.replaceAll(RegExp(r'[^0-9.]'), '');
+          luminosity = double.tryParse(cleanedLuminosityString)?.toString() ?? '0';
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).orientation == Orientation.portrait) {
-      _markerSize = 35;
-    } else {
-      _markerSize = 25;
-    }
-
     return Center(
       child: SfRadialGauge(
         axes: <RadialAxis>[
@@ -45,41 +49,22 @@ class _RadialRangeSliderStateTypesState extends State<RadialRangeSliderStateType
             endAngle: 270,
             ranges: <GaugeRange>[
               GaugeRange(
-                endValue: _secondMarkerValue,
-                startValue: _firstMarkerValue,
+                endValue: double.parse(luminosity),
+                startValue: 0,
                 sizeUnit: GaugeSizeUnit.factor,
-                color: _enableDragging
-                  ? const Color.fromRGBO(44, 117, 220, 1)
-                  : const Color(0xFF888888),
+                color: const Color.fromRGBO(44, 117, 220, 1),
                 endWidth: 0.05,
                 startWidth: 0.05,
               )
             ],
             pointers: <GaugePointer>[
               MarkerPointer(
-                value: _firstMarkerValue,
+                value: double.parse(luminosity),
                 elevation: 5,
-                onValueChanged: handleFirstPointerValueChanged,
-                onValueChanging: handleFirstPointerValueChanging,
-                enableDragging: _enableDragging,
-                color: _enableDragging
-                  ? const Color.fromRGBO(44, 117, 220, 1)
-                  : const Color(0xFF888888),
-                markerHeight: _markerSize,
-                markerWidth: _markerSize,
-                markerType: MarkerType.circle,
-              ),
-              MarkerPointer(
-                value: _secondMarkerValue,
-                elevation: 5,
-                onValueChanged: handleSecondPointerValueChanged,
-                onValueChanging: handleSecondPointerValueChanging,
-                enableDragging: _enableDragging,
-                color: _enableDragging
-                  ? const Color.fromRGBO(44, 117, 220, 1)
-                  : const Color(0xFF888888),
-                markerHeight: _markerSize,
-                markerWidth: _markerSize,
+                enableDragging: false,
+                color: const Color.fromRGBO(44, 117, 220, 1),
+                markerHeight: 30,
+                markerWidth: 30,
                 markerType: MarkerType.circle,
               ),
             ],
@@ -89,9 +74,9 @@ class _RadialRangeSliderStateTypesState extends State<RadialRangeSliderStateType
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     Text(
-                      '$_annotationValue1 - $_annotationValue2',
-                      style: TextStyle(
-                        fontSize: _annotationFontSize,
+                      'Luminosidad: $luminosity',
+                      style: const TextStyle(
+                        fontSize: 20,
                         fontFamily: 'Times',
                         fontWeight: FontWeight.bold,
                       ),
@@ -105,56 +90,5 @@ class _RadialRangeSliderStateTypesState extends State<RadialRangeSliderStateType
         ],
       ),
     );
-  }
-
-  Widget buildSettings(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        const Text('Enable drag'),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(35, 0, 0, 0),
-          child: Transform.scale(
-            scale: 0.8,
-            child: CupertinoSwitch(
-              activeColor: Theme.of(context).primaryColor,
-              value: _enableDragging,
-              onChanged: (bool value) {
-                setState(() {
-                  _enableDragging = value;
-                });
-              },
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  void handleSecondPointerValueChanged(double markerValue) {
-    setState(() {
-      _secondMarkerValue = markerValue;
-      final int value = _secondMarkerValue.abs().toInt();
-      _annotationValue2 = '$value%';
-    });
-  }
-
-  void handleSecondPointerValueChanging(ValueChangingArgs args) {
-    if (args.value <= _firstMarkerValue || (args.value - _secondMarkerValue).abs() > 10) {
-      args.cancel = true;
-    }
-  }
-
-  void handleFirstPointerValueChanged(double markerValue) {
-    setState(() {
-      _firstMarkerValue = markerValue;
-      final int value = _firstMarkerValue.abs().toInt();
-      _annotationValue1 = '$value';
-    });
-  }
-
-  void handleFirstPointerValueChanging(ValueChangingArgs args) {
-    if (args.value >= _secondMarkerValue || (args.value - _firstMarkerValue).abs() > 10) {
-      args.cancel = true;
-    }
   }
 }
