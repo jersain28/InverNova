@@ -5,7 +5,8 @@ import 'package:invernova/screens/configuration.dart';
 import 'package:invernova/screens/home_screen.dart';
 
 class Temperature extends StatefulWidget {
-  const Temperature({super.key});
+  // ignore: use_super_parameters
+  const Temperature({Key? key}) : super(key: key);
 
   @override
   State<Temperature> createState() => _TemperatureState();
@@ -14,7 +15,7 @@ class Temperature extends StatefulWidget {
 class _TemperatureState extends State<Temperature> {
   int indexNavigation = 0;
 
-  openScreen(int index, BuildContext context) {
+  void openScreen(int index, BuildContext context) {
     MaterialPageRoute ruta = MaterialPageRoute(builder: (context) => const HomeScreen());
 
     switch (index) {
@@ -43,17 +44,6 @@ class _TemperatureState extends State<Temperature> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Temperatura 🌡️'),
-        actions: [
-          IconButton(icon: const Hero(
-            tag: 'lightbulb',
-            child: Icon(Icons.lightbulb_outline,
-            color: Colors.white,
-          ),
-        ),
-        onPressed: () {
-          _showTipsDialogTemperature(context);
-          },
-        ),        ],
       ),
       body: ListView(
         children: [
@@ -103,7 +93,7 @@ class _TemperatureState extends State<Temperature> {
                 ),
               ),
               const SizedBox(height: 10),
-              const HeatMeter(Key('heatMeter')), 
+              const HeatMeter(),
               const SizedBox(height: 30,),
             ],
           ),
@@ -112,34 +102,3 @@ class _TemperatureState extends State<Temperature> {
     );
   }
 }
-
-void _showTipsDialogTemperature(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Tip'),
-          content: const SingleChildScrollView(
-            child: Column(
-              children: [
-                Card(
-                  child: ListTile(
-                    title: Text('Sobre la Temperatura'),
-                    subtitle: Text(''),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Entendido'),
-            ),
-          ],
-        );
-      },
-    );
-  }
