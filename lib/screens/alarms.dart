@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:invernova/screens/configuration.dart';
 import 'package:invernova/screens/home_screen.dart';
 import 'package:invernova/screens/login.dart';
 import 'package:invernova/services/notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 class Alarm {
   String name;
   RangeValues valueRange;
@@ -76,6 +76,7 @@ class _AlarmsState extends State<Alarms> {
     await prefs.remove('temperatureAlarms');
     await prefs.remove('humidityAlarms');
     await prefs.remove('luminosityAlarms');
+    
 
     await FirebaseAuth.instance.signOut();
 
@@ -85,7 +86,7 @@ class _AlarmsState extends State<Alarms> {
       MaterialPageRoute(builder: (context) => const LogIn()),
     );
   }
-
+  
   @override
   void initState() {
     super.initState();
@@ -146,157 +147,203 @@ class _AlarmsState extends State<Alarms> {
   }
 
   void _addTemperatureAlert() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        String alertName = '';
-        RangeValues selectedRange = const RangeValues(0, 100);
-        return AlertDialog(
-          title: const Text('Agregar Alerta de Temperatura'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                onChanged: (value) {
-                  alertName = value;
-                },
-                decoration: const InputDecoration(labelText: 'Nombre de la alerta'),
-              ),
-              const SizedBox(height: 20),
-              const Text('Selecciona el rango de temperatura deseado:'),
-              SliderWidget(
-                values: selectedRange,
-                onChanged: (values) {
-                  setState(() {
-                    selectedRange = values;
-                  });
-                },
-              ),
-            ],
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                if (temperatureAlarms.length < 2) {
-                  final newAlert = Alarm(
-                    name: alertName,
-                    valueRange: selectedRange,
-                  );
-                  setState(() {
-                    temperatureAlarms.add(newAlert);
-                  });
-                  mostrarAlertaTemperatura();
-                  Navigator.of(context).pop();
-                } else {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text('Alerta'),
-                        content: const Text('Solo se permiten dos alertas de temperatura configuradas.'),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                }
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      String alertName = '';
+      RangeValues selectedRange = const RangeValues(0, 100);
+      return AlertDialog(
+        title: const Text('Agregar Alerta de Temperatura'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              onChanged: (value) {
+                alertName = value;
               },
-              child: const Text('Guardar'),
+              decoration: const InputDecoration(labelText: 'Nombre de la alerta'),
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
+            const SizedBox(height: 20),
+            const Text('Selecciona el rango de temperatura deseado:'),
+            SliderWidget(
+              values: selectedRange,
+              onChanged: (values) {
+                setState(() {
+                  selectedRange = values;
+                });
               },
-              child: const Text('Cancelar'),
             ),
           ],
-        );
-      },
-    ).then((_) => _saveAlarms());
-  }
-
-  void _addHumidityAlert() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        String alertName = '';
-        RangeValues selectedRange = const RangeValues(0, 100);
-
-        return AlertDialog(
-          title: const Text('Agregar Alerta de Humedad'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                onChanged: (value) {
-                  alertName = value;
-                },
-                decoration: const InputDecoration(labelText: 'Nombre de la alerta'),
-              ),
-              const SizedBox(height: 20),
-              const Text('Selecciona el rango de humedad deseado:'),
-              SliderWidget(
-                values: selectedRange,
-                onChanged: (values) {
-                  setState(() {
-                    selectedRange = values;
-                  });
-                },
-              ),
-            ],
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                if (humidityAlarms.length < 2) {
-                  final newAlert = Alarm(
-                    name: alertName,
-                    valueRange: selectedRange,
-                  );
-                  setState(() {
-                    humidityAlarms.add(newAlert);
-                  });
-                  mostrarAlertaHumedad();
-                  Navigator.of(context).pop();
-                } else {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text('Alerta'),
-                        content: const Text('Solo se permiten dos alertas de humedad configuradas.'),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                }
-              },
-              child: const Text('Guardar'),
-            ),
-            TextButton(
-              onPressed: () {
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              if (temperatureAlarms.length < 2) {
+                final newAlert = Alarm(
+                  name: alertName,
+                  valueRange: selectedRange,
+                );
+                setState(() {
+                  temperatureAlarms.add(newAlert);
+                });
+                _saveAlarms();
+                 _startListeningToTemperatureChanges();
                 Navigator.of(context).pop();
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Alerta'),
+                      content: const Text('Solo se permiten dos alertas de temperatura configuradas.'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
+            },
+            child: const Text('Guardar'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Cancelar'),
+          ),
+        ],
+      );
+    },
+  ).then((_) => _saveAlarms());
+
+}
+void _startListeningToTemperatureChanges() {
+  final databaseReference = FirebaseDatabase.instance.ref();
+  databaseReference.child('datos_temperatura').child('temperatura').onValue.listen((event) {
+    final dataSnapshot = event.snapshot;
+    final temperaturaActual = dataSnapshot.value.toString();
+    final temperaturaNumerica = double.tryParse(temperaturaActual.replaceAll(RegExp(r'[^0-9.]'), ''));
+    
+    for (Alarm alarm in temperatureAlarms) {
+      if (alarm.activated && temperaturaNumerica != null) {
+        if (temperaturaNumerica < alarm.valueRange.end) {
+          mostrarAlertaTemperatura();
+        } else if  (temperaturaNumerica > alarm.valueRange.end) {
+          mostrarAlertaTemperatura1();
+        }
+      }
+    }
+  });
+}
+
+
+
+void _addHumidityAlert() {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      String alertName = '';
+      RangeValues selectedRange = const RangeValues(0, 100);
+
+      return AlertDialog(
+        title: const Text('Agregar Alerta de Humedad'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              onChanged: (value) {
+                alertName = value;
               },
-              child: const Text('Cancelar'),
+              decoration: const InputDecoration(labelText: 'Nombre de la alerta'),
+            ),
+            const SizedBox(height: 20),
+            const Text('Selecciona el rango de humedad deseado:'),
+            SliderWidget(
+              values: selectedRange,
+              onChanged: (values) {
+                setState(() {
+                  selectedRange = values;
+                });
+              },
             ),
           ],
-        );
-      },
-    ).then((_) => _saveAlarms());
-  }
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              if (humidityAlarms.length < 2) {
+                final newAlert = Alarm(
+                  name: alertName,
+                  valueRange: selectedRange,
+                );
+                setState(() {
+                  humidityAlarms.add(newAlert);
+                });
+                _saveAlarms();
+                _startListeningToHumidityChanges(); // Aquí llamamos al método para iniciar el monitoreo
+                Navigator.of(context).pop();
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Alerta'),
+                      content: const Text('Solo se permiten dos alertas de humedad configuradas.'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
+            },
+            child: const Text('Guardar'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Cancelar'),
+          ),
+        ],
+      );
+    },
+  ).then((_) => _saveAlarms());
+}
+
+void _startListeningToHumidityChanges() {
+  final databaseReference = FirebaseDatabase.instance.ref();
+  databaseReference.child('datos_humedad').child('humedad').onValue.listen((event) {
+    final dataSnapshot = event.snapshot;
+    final humedadActual = double.tryParse(dataSnapshot.value.toString());
+    for (Alarm alarm in humidityAlarms) {
+      if (alarm.activated && humedadActual != null && humedadActual <= alarm.valueRange.end) {
+        mostrarAlertaHumedad();
+        break;
+      }
+    }
+    
+  });
+}
+
+
+
+
+
+  
+
+
 
   void _addLuminosityAlert() {
     showDialog(

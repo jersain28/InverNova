@@ -3,11 +3,12 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
-Future<void>initNotifications() async {
+Future<void> initNotifications() async {
   const AndroidInitializationSettings initializationSettingsAndroid =
       AndroidInitializationSettings('in_notification');
 
-  const DarwinInitializationSettings initializationSettingsIOS = DarwinInitializationSettings();
+  const DarwinInitializationSettings initializationSettingsIOS =
+      DarwinInitializationSettings();
 
   const InitializationSettings initializationSettings = InitializationSettings(
     android: initializationSettingsAndroid,
@@ -15,37 +16,45 @@ Future<void>initNotifications() async {
   );
 
   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-  
 }
 
-Future<void>mostrarNotificacion(String titulo, String mensaje) async {
+Future<void> mostrarNotificacion(String titulo, String mensaje) async {
   const AndroidNotificationDetails androidNotificationDetails =
       AndroidNotificationDetails(
-        'your channel id',
-        'your channel name',
-        importance: Importance.max,
-        priority: Priority.high,
-      );
+    'your channel id',
+    'your channel name',
+    importance: Importance.max,
+    priority: Priority.high,
+  );
 
   const NotificationDetails notificationDetails = NotificationDetails(
     android: androidNotificationDetails,
   );
 
   await flutterLocalNotificationsPlugin.show(
-    1,
-    'Alerta Configurada',
-    'Se ha agregado una nueva alerta',
-    notificationDetails
-  );
+      2, // Cambia el ID si lo deseas
+      titulo,
+      mensaje,
+      notificationDetails);
 }
+
 void mostrarAlertaTemperatura() {
-  mostrarNotificacion('Alerta de Temperatura Agregada', 'Se ha agregado una nueva alerta');
+  mostrarNotificacion('Alerta',
+      'Temperatura Baja');
+      
+}
+void mostrarAlertaTemperatura1(){
+  mostrarNotificacion('Alerta',
+      'Temperatura Alta');
 }
 
 void mostrarAlertaHumedad() {
-  mostrarNotificacion('Alerta de Humedad Agregada', 'Se ha agregado una nueva alerta');
+  mostrarNotificacion('Alerta',
+      'Humedad Baja, Comienzara el riego');
 }
 
+
 void mostrarAlertaLuminosidad() {
-  mostrarNotificacion('Alerta de Luminosidad Agregada', 'Se ha agregado una nueva alerta');
+  mostrarNotificacion('Alerta de Luminosidad Agregada',
+      'Se ha agregado una nueva alerta de luminosidad');
 }

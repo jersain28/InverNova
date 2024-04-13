@@ -21,6 +21,7 @@ dependencies:
   shared_preferences: ^2.2.2
   firebase_database: ^10.5.0
   uuid: ^4.4.0
+  firebase_messaging: ^14.8.1
 
 dev_dependencies:
   flutter_test:
