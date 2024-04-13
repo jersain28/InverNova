@@ -286,7 +286,7 @@ void _addHumidityAlert() {
                   humidityAlarms.add(newAlert);
                 });
                 _saveAlarms();
-                _startListeningToHumidityChanges(); // Aquí llamamos al método para iniciar el monitoreo
+                _startListeningToHumidityChanges(); 
                 Navigator.of(context).pop();
               } else {
                 showDialog(
