@@ -32,7 +32,8 @@ class _ProfileScreenState extends State<PerfilScreen> {
   Future<void> _cargarPerfil() async {
     try {
       // Realizar la consulta a Firestore para obtener los datos del usuario actual
-      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+          .instance
           .collection('usuarios')
           .doc(_getIdUsuarioActual())
           .get();
@@ -41,6 +42,8 @@ class _ProfileScreenState extends State<PerfilScreen> {
         setState(() {
           _nombreUsuario = snapshot.data()!['name'];
           _imageUrl = snapshot.data()!['imageUrl'];
+          _nombreController.text =
+              _nombreUsuario; // Establecer el nombre en el campo de texto
         });
       }
     } catch (error) {
@@ -48,13 +51,29 @@ class _ProfileScreenState extends State<PerfilScreen> {
     }
   }
 
-
   Future<void> _elegirImagen() async {
     final imagenElegida =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     if (imagenElegida != null) {
+      final File imagenSeleccionadaTemp = File(imagenElegida.path);
       setState(() {
-        _imagenSeleccionada = File(imagenElegida.path);
+        _imagenSeleccionada = imagenSeleccionadaTemp;
+        _imageUrl =
+            ''; // Reiniciar _imageUrl para mostrar la nueva imagen seleccionada
+      });
+
+      // Actualizar _imageUrl con la URL de la nueva imagen seleccionada
+      final firebase_storage.Reference referenciaImagen = firebase_storage
+          .FirebaseStorage.instance
+          .ref('imagenes_perfil/${const Uuid().v4()}');
+      final firebase_storage.UploadTask tareaSubida =
+          referenciaImagen.putFile(_imagenSeleccionada!);
+      await tareaSubida;
+      final String urlImagen = await referenciaImagen.getDownloadURL();
+      print(
+          'URL de la imagen seleccionada: $urlImagen'); // Agregado: imprimir la URL de la imagen seleccionada
+      setState(() {
+        _imageUrl = urlImagen;
       });
     }
   }
@@ -66,20 +85,27 @@ class _ProfileScreenState extends State<PerfilScreen> {
       final tareaSubida = referenciaImagen.putFile(_imagenSeleccionada!);
       await tareaSubida;
       final urlImagen = await referenciaImagen.getDownloadURL();
+      print(
+          'URL de la imagen subida: $urlImagen'); // Agregado: imprimir la URL de la imagen subida
+
+      setState(() {
+        _imageUrl = urlImagen; // Actualizar _imageUrl con la nueva URL
+      });
 
       // Guardar la URL de la imagen en Firestore
       await FirebaseFirestore.instance
           .collection('usuarios')
           .doc(_getIdUsuarioActual())
           .set(
-              {
-            'imageUrl': urlImagen,
-            'name': nombreUsuario,
-            // Aquí puedes agregar más campos como el nombre y el correo electrónico si lo deseas
-          },
-              SetOptions(
-                  merge:
-                      true)); // Esto fusiona los nuevos datos con los existentes si hay algunos
+        {
+          'imageUrl': urlImagen,
+          'name': nombreUsuario,
+          // Aquí puedes agregar más campos como el nombre y el correo electrónico si lo deseas
+        },
+        SetOptions(
+          merge: true,
+        ),
+      );
 
       print('Imagen subida exitosamente: $urlImagen');
     } catch (error) {
@@ -91,6 +117,29 @@ class _ProfileScreenState extends State<PerfilScreen> {
     // Aquí obtén el ID del usuario actual desde Firebase Authentication
     // Esto es solo un ejemplo, debes implementar la autenticación de Firebase para obtener el ID del usuario
     return 'Usuario';
+  }
+
+  Widget _buildProfileImage() {
+    if (_imagenSeleccionada != null) {
+      return CircleAvatar(
+        radius: 80.0,
+        backgroundImage: FileImage(_imagenSeleccionada!),
+      );
+    } else if (_imageUrl.isNotEmpty) {
+      return CircleAvatar(
+        radius: 80.0,
+        backgroundImage: NetworkImage(_imageUrl),
+      );
+    } else {
+      return const CircleAvatar(
+        radius: 80.0,
+        child: Icon(
+          Icons.person,
+          size: 80,
+          color: Colors.white,
+        ),
+      );
+    }
   }
 
   void _seleccionarElemento(int indice) {
@@ -114,152 +163,103 @@ class _ProfileScreenState extends State<PerfilScreen> {
   }
 
   @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      title: const Text('Perfil de Usuario'),
-    ),
-    body: SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: 20.0,
-          ),
-          // Mostrar la imagen del usuario
-          _imageUrl.isNotEmpty
-              ? CircleAvatar(
-                  radius: 80.0,
-                  backgroundImage: NetworkImage(_imageUrl),
-                )
-              : const SizedBox(), // Mostrar un contenedor vacío si no hay imagen
-          SizedBox(
-            height: 20.0,
-          ),
-          // Mostrar el nombre del usuario
-          Text(
-            _nombreUsuario.isNotEmpty ? 'Nombre: $_nombreUsuario' : 'Nombre: No disponible',
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(
-            height: 20.0,
-          ),
-          GestureDetector(
-            onTap: () => _elegirImagen(),
-            child: Container(
-              height: 200,
-              width: 200,
-              decoration: BoxDecoration(
-                image: _imagenSeleccionada != null
-                    ? DecorationImage(
-                        image: FileImage(_imagenSeleccionada!),
-                        fit: BoxFit.cover,
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Perfil de Usuario'),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 20.0),
+            // Sección para seleccionar una imagen
+            GestureDetector(
+              onTap: () => _elegirImagen(),
+              child: Container(
+                height: 200,
+                width: 200,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color.fromARGB(90, 125, 123, 123),
+                ),
+                child: _imagenSeleccionada != null
+                    ? CircleAvatar(
+                        radius: 80.0,
+                        backgroundImage: FileImage(_imagenSeleccionada!),
                       )
-                    : null,
+                    : _imageUrl.isNotEmpty
+                        ? CircleAvatar(
+                            radius: 80.0,
+                            backgroundImage: NetworkImage(_imageUrl),
+                          )
+                        : const CircleAvatar(
+                            radius: 80.0,
+                            child: Icon(
+                              Icons.person,
+                              size: 80,
+                              color: Colors.white,
+                            ),
+                          ),
               ),
-              child: _imagenSeleccionada == null
-                  ? const CircleAvatar(
-                      radius: 80,
-                      backgroundColor: Color.fromARGB(90, 125, 123, 123))
-                  : null,
             ),
-          ),
-          ElevatedButton(
-            onPressed: _imagenSeleccionada != null
-                ? () async {
-                    String nombreUsuario = _nombreController.text;
-                    if (nombreUsuario.isNotEmpty) {
-                      await _subirImagen(
-                          nombreUsuario); // Pasar el nombre de usuario como argumento
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Información de perfil guardada'),
-                        ),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Por favor, ingrese su nombre'),
-                        ),
-                      );
-                    }
-                  }
-                : null,
-            child: _imagenSeleccionada != null
-                ? const Text('Guardar')
-                : const Text('Selecciona una Imagen'),
-          ),
-          Container(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                const Text(
-                  'Nombre:',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+            const SizedBox(height: 20.0),
+            // Campo para ingresar el nombre
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: TextField(
+                controller: _nombreController,
+                decoration: const InputDecoration(
+                  hintText: 'Ingrese su nombre',
+                  border: OutlineInputBorder(),
                 ),
-                const SizedBox(height: 10),
-                TextField(
-                  controller:
-                      _nombreController, // Controlador para capturar el nombre del usuario
-                  decoration: const InputDecoration(
-                    hintText: 'Ingrese su nombre',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () async {
-                    String nombreUsuario = _nombreController.text;
-                    if (nombreUsuario.isNotEmpty) {
-                      await _subirImagen(nombreUsuario);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Información de perfil guardada'),
-                        ),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Por favor, ingrese su nombre'),
-                        ),
-                      );
-                    }
-                  },
-                  child: const Text('Guardar'),
-                ),
-              ],
+              ),
             ),
+            const SizedBox(height: 20.0),
+            // Botón para guardar los cambios
+            ElevatedButton(
+              onPressed: () async {
+                String nombreUsuario = _nombreController.text;
+                if (nombreUsuario.isNotEmpty) {
+                  await _subirImagen(nombreUsuario);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Información de perfil guardada'),
+                    ),
+                  );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Por favor, ingrese su nombre'),
+                    ),
+                  );
+                }
+              },
+              child: const Text('Guardar'),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _indiceSeleccionado,
+        backgroundColor: const Color.fromARGB(204, 255, 255, 255),
+        selectedItemColor: const Color.fromARGB(197, 46, 200, 105),
+        onTap: _seleccionarElemento,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.warning),
+            label: 'Alarmas',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Configuración',
           ),
         ],
       ),
-    ),
-    bottomNavigationBar: BottomNavigationBar(
-      currentIndex: _indiceSeleccionado,
-      backgroundColor: const Color.fromARGB(204, 255, 255, 255),
-      selectedItemColor: const Color.fromARGB(197, 46, 200, 105),
-      onTap: _seleccionarElemento,
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.warning),
-          label: 'Alarmas',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: 'Configuración',
-        ),
-      ],
-    ),
-  );
-}
-
+    );
+  }
 }
