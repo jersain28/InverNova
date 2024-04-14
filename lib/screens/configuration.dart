@@ -55,7 +55,21 @@ class _ConfigurationState extends State<Configuration> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Configuracion'),
+        title: const Text('Configuración'),
+        automaticallyImplyLeading: false,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+              Color.fromARGB(255, 21, 235, 28),
+              Color.fromARGB(255, 12, 181, 3),
+              Color.fromARGB(255, 1, 147, 6),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            ),
+          ),
+        ),
       ),
       body: Center(
         child: ListView(
@@ -87,7 +101,7 @@ class _ConfigurationState extends State<Configuration> {
             const Divider(),
             ListTile(
               leading: const Icon(Icons.logout_outlined),
-              title: const Text('Cerrar Sesion'),
+              title: const Text('Cerrar Sesión'),
               onTap: () async {
                 await FirebaseAuth.instance.signOut();
                 Navigator.pushReplacement(
@@ -96,9 +110,11 @@ class _ConfigurationState extends State<Configuration> {
                   MaterialPageRoute(
                     builder: (context)=> const LogIn(),
                   ),
+                  
                 );
               },
-            )
+            ),
+           const Divider(),
           ],
         ),
       ),
@@ -114,11 +130,11 @@ class _ConfigurationState extends State<Configuration> {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.warning),
-          label: 'Alarms'
+          label: 'Alertas'
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings),
-          label: 'Configuracion'
+          label: 'Configuración'
           ),
         ],
       )

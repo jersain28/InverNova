@@ -12,7 +12,7 @@ class WaterLevel extends StatefulWidget {
 
 class WaterLevelState extends State<WaterLevel> {
   late DatabaseReference humidityRef;
-  late String humidity = '0';
+  late double humidity = 0.0;
 
   @override
   void initState() {
@@ -22,9 +22,9 @@ class WaterLevelState extends State<WaterLevel> {
       final data = event.snapshot.value as Map<dynamic, dynamic>?;
       if (data != null && data.containsKey('humedad')) {
         setState(() {
-          final humidityString = data['humedad'] as String;
-          final cleanedHumidityString = humidityString.replaceAll(RegExp(r'[^0-9.]'), '');
-          humidity = double.tryParse(cleanedHumidityString)?.toString() ?? '0';
+          final humidityString = data['humedad'].toString();
+          final cleanedHumidityString = double.tryParse(humidityString) ?? 0.0;
+          humidity = cleanedHumidityString;
         });
       }
     });
@@ -56,7 +56,7 @@ class WaterLevelState extends State<WaterLevel> {
               ),
               markerPointers: <LinearMarkerPointer>[
                 LinearWidgetPointer(
-                  value: double.parse(humidity),
+                  value: humidity,
                   enableAnimation: false,
                   child: Container(
                     width: 50,
@@ -84,7 +84,7 @@ class WaterLevelState extends State<WaterLevel> {
           ),
           const SizedBox(height: 20),
           Text(
-            'Nivel de Humedad: $humidity%',
+            'Nivel de Humedad: ${humidity.toStringAsFixed(2)}%',
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,

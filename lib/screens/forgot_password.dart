@@ -135,16 +135,24 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             width: 140,
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 28, 129, 47),
                               borderRadius: BorderRadius.circular(30),
+                              gradient: const LinearGradient(
+                                colors: [
+                                  Color.fromARGB(255, 3, 210, 9),
+                                  Color.fromARGB(255, 10, 163, 2),
+                                  Color.fromARGB(255, 0, 173, 6)
+                                ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              ),
                             ),
                             child: const Center(
                               child: Text(
                                 "Send Email",
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 22.0,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),

@@ -199,8 +199,16 @@ class _SignUpState extends State<SignUp> {
                       padding: const EdgeInsets.symmetric(
                         vertical: 13.0, horizontal: 2.0),
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 28, 129, 47),
                         borderRadius: BorderRadius.circular(30),
+                        gradient: const LinearGradient(
+                          colors: [
+                          Color.fromARGB(255, 3, 210, 9),
+                          Color.fromARGB(255, 10, 163, 2),
+                          Color.fromARGB(255, 0, 173, 6)
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        ),
                       ),
                       child: const Center(
                         child: Text(
@@ -217,46 +225,6 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
           ),
-          /*const SizedBox(
-            height: 40.0,
-          ),
-          const Text(
-            "or LogIn with",
-            style: TextStyle(
-                color: Color(0xFF273671),
-                fontSize: 22.0,
-                fontWeight: FontWeight.w500),
-          ),
-          const SizedBox(
-            height: 30.0,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Image(
-                image: AssetImage(
-                  'assets/images/google.png',
-                ),
-              ),
-
-              // Image.asset(
-              //   "images/google.png",
-              //   height: 45,
-              //   width: 45,
-              //   fit: BoxFit.cover,
-              // ),
-              
-              const SizedBox(
-                width: 30.0,
-              ),
-              Image.asset(
-                "images/apple.png",
-                height: 50,
-                width: 50,
-                fit: BoxFit.cover,
-              )
-            ],
-          ),*/
           const SizedBox(
             height: 20.0,
           ),

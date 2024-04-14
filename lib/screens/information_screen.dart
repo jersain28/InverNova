@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:invernova/screens/alarms.dart';
+import 'package:invernova/screens/configuration.dart';
+import 'package:invernova/screens/home_screen.dart';
 
 class InformationApp extends StatefulWidget {
   const InformationApp({super.key});
@@ -8,11 +11,53 @@ class InformationApp extends StatefulWidget {
 }
 
 class _InformationAppState extends State<InformationApp> {
+  int _selectedIndex = 2;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      switch (index) {
+        case 0:
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const HomeScreen()),
+          );
+          break;
+        case 1:
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const Alarms()),
+          );
+          break;
+        case 2:
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const Configuration()),
+          );
+          break;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title:const  Text('Información'),
+        automaticallyImplyLeading: false,
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+              Color.fromARGB(255, 21, 235, 28),
+              Color.fromARGB(255, 12, 181, 3),
+              Color.fromARGB(255, 1, 147, 6),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            ),
+          ),
+        ),
       ),
       body: const SingleChildScrollView(
         padding: EdgeInsets.all(20.0),
@@ -41,9 +86,9 @@ class _InformationAppState extends State<InformationApp> {
             ),
             SizedBox(height: 10.0),
             Text(
-              '- Medicion de temperatura.\n'
-              '- Medicion de humedad.\n'
-              '- Medicion de luminosidad.\n'
+              '- Medición de temperatura.\n'
+              '- Medición de humedad.\n'
+              '- Medición de luminosidad.\n'
               '- Control de riego.\n',
               style: TextStyle(fontSize: 16.0),
             ),    
@@ -113,6 +158,26 @@ class _InformationAppState extends State<InformationApp> {
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+      currentIndex: _selectedIndex,
+      backgroundColor: const Color.fromARGB(204, 255, 255, 255),
+      selectedItemColor: const Color.fromARGB(197, 46, 200, 105),
+      onTap: _onItemTapped,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.warning),
+            label: 'Alertas',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Configuración',
+          ),
+        ],
       ),
     );
   }

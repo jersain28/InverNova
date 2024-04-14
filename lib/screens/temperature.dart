@@ -5,7 +5,8 @@ import 'package:invernova/screens/configuration.dart';
 import 'package:invernova/screens/home_screen.dart';
 
 class Temperature extends StatefulWidget {
-  const Temperature({super.key});
+  // ignore: use_super_parameters
+  const Temperature({Key? key}) : super(key: key);
 
   @override
   State<Temperature> createState() => _TemperatureState();
@@ -14,7 +15,7 @@ class Temperature extends StatefulWidget {
 class _TemperatureState extends State<Temperature> {
   int indexNavigation = 0;
 
-  openScreen(int index, BuildContext context) {
+  void openScreen(int index, BuildContext context) {
     MaterialPageRoute ruta = MaterialPageRoute(builder: (context) => const HomeScreen());
 
     switch (index) {
@@ -42,18 +43,33 @@ class _TemperatureState extends State<Temperature> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Temperatura 🌡️'),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+              Color.fromARGB(255, 21, 235, 28),
+              Color.fromARGB(255, 12, 181, 3),
+              Color.fromARGB(255, 1, 147, 6),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            ),
+          ),
+        ),
         actions: [
           IconButton(icon: const Hero(
-            tag: 'lightbulb',
-            child: Icon(Icons.lightbulb_outline,
-            color: Colors.white,
+          tag: 'lightbulb',
+          child: Icon(Icons.lightbulb_outline,
+          color: Colors.white,
           ),
         ),
         onPressed: () {
           _showTipsDialogTemperature(context);
           },
-        ),        ],
+        ),
+      ],
       ),
       body: ListView(
         children: [
@@ -63,7 +79,6 @@ class _TemperatureState extends State<Temperature> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: indexNavigation,
         backgroundColor: const Color.fromARGB(204, 255, 255, 255),
-        unselectedItemColor: const Color.fromARGB(255, 8, 50, 17),
         selectedItemColor: const Color.fromARGB(197, 46, 200, 105),
         onTap: (index) => openScreen(index, context),
         items: const [
@@ -73,11 +88,11 @@ class _TemperatureState extends State<Temperature> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.warning),
-            label: 'Alarms',
+            label: 'Alertas',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Perfil',
+            icon: Icon(Icons.settings),
+            label: 'Configuración',
           ),
         ],
       ),
@@ -103,7 +118,7 @@ class _TemperatureState extends State<Temperature> {
                 ),
               ),
               const SizedBox(height: 10),
-              const HeatMeter(Key('heatMeter')), 
+              const HeatMeter(),
               const SizedBox(height: 30,),
             ],
           ),
@@ -118,14 +133,14 @@ void _showTipsDialogTemperature(BuildContext context) {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Tip'),
+          title: const Text('¡Consejo!'),
           content: const SingleChildScrollView(
             child: Column(
               children: [
                 Card(
                   child: ListTile(
                     title: Text('Sobre la Temperatura'),
-                    subtitle: Text(''),
+                    subtitle: Text('El jitomate prospera en temperaturas cálidas. La temperatura ideal para el crecimiento óptimo del jitomate suele estar entre los 20°C y 28°C durante el día, y no debe descender de los 15°C durante la noche. Mantener una temperatura constante dentro de este rango puede maximizar el crecimiento de las plantas.'),
                   ),
                 ),
               ],

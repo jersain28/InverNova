@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class HeatMeter extends StatefulWidget {
-  const HeatMeter(Key key) : super(key: key);
+  // ignore: use_super_parameters
+  const HeatMeter({Key? key}) : super(key: key);
 
   @override
   HeatMeterState createState() => HeatMeterState();
@@ -10,6 +12,25 @@ class HeatMeter extends StatefulWidget {
 
 class HeatMeterState extends State<HeatMeter> {
   double widgetPointerWithGradientValue = 60;
+  late DatabaseReference temperatureRef;
+  late String temperature = '0';
+
+  @override
+  void initState() {
+    super.initState();
+    temperatureRef = FirebaseDatabase.instance.ref().child('datos_temperatura');
+    temperatureRef.onValue.listen((event) {
+      final data = event.snapshot.value as Map<dynamic, dynamic>?;
+      if (data != null && data.containsKey('temperatura')) {
+        setState(() {
+          final temperatureString = data['temperatura'] as String;
+          final cleanedTemperatureString = temperatureString.replaceAll(RegExp(r'[^0-9.]'), '');
+          temperature = double.tryParse(cleanedTemperatureString)?.toString() ?? '0';
+          widgetPointerWithGradientValue = double.tryParse(cleanedTemperatureString) ?? 0;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +40,7 @@ class HeatMeterState extends State<HeatMeter> {
       minorTicksPerInterval: 0,
       animateAxis: true,
       labelFormatterCallback: (String value) {
-        return '$value°C'; // Utilizando interpolación de cadenas
+        return '$value°C';
       },
       axisTrackStyle: const LinearAxisTrackStyle(thickness: 1),
       barPointers: <LinearBarPointer>[
@@ -45,7 +66,7 @@ class HeatMeterState extends State<HeatMeter> {
             height: 45,
             child: Center(
               child: Text(
-                '${widgetPointerWithGradientValue.toStringAsFixed(0)}°C', 
+                '${widgetPointerWithGradientValue.toStringAsFixed(0)}°C',
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 14,
