@@ -5,7 +5,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 
 Future<void> initNotifications() async {
   const AndroidInitializationSettings initializationSettingsAndroid =
-      AndroidInitializationSettings('InverNovaLogo1.jpg');
+      AndroidInitializationSettings('in_notification');
 
   const DarwinInitializationSettings initializationSettingsIOS =
       DarwinInitializationSettings();
